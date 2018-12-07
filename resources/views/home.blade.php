@@ -1,7 +1,4 @@
 @extends('master')
-
-@section('title', 'Home')
-
 @section('content')
     <div class="row" style="margin-top:25%;">
         <div class="text-center">

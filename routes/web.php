@@ -12,12 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 
+Route::get('/{slug}', function ($slug) {
+//    dd('here');
+    if ($slug == 'admin') return view('admin');
+
+    if (view()->exists($slug)) {
+        return view($slug, ['title' => $slug])->render();
+    }
+    return "Page not exists";
+});
+
 Route::get('/admin', function () {
-    return view('admin');
+
 });
 
 
