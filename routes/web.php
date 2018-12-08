@@ -12,25 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home', ['title' => 'home']);
 });
 
+Auth::routes();
+
+Route::get('/admin', function () {
+
+})->middleware('auth');
 
 Route::get('/{slug}', function ($slug) {
 //    dd('here');
-    if ($slug == 'admin') return view('admin');
-
     if (view()->exists($slug)) {
         return view($slug, ['title' => $slug])->render();
     }
     return "Page not exists";
 });
 
-Route::get('/admin', function () {
 
-});
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
