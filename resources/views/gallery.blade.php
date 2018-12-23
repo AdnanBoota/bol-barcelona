@@ -1,4 +1,4 @@
 @extends('master')
 @section('content')
-    <div>gallery</div>
+    <div class="container">gallery</div>
 @endsection

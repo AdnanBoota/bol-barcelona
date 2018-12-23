@@ -7,8 +7,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </head>
 <style>
+    body {
+        font-family: 'Roboto';
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
     footer a, footer a:link, footer a:hover, footer a:visited, footer a:active {
         color: white;
         text-decoration: none;
@@ -16,18 +26,21 @@
         font-size: 15px;
     }
 </style>
+
+@yield('style')
 <body>
 
-<div class="container">
-    @if($title!='home')
-        <div class="text-center" style="margin-top:20px"><img width="75px" src="{{asset('images/logo_small.png')}}"/></div>
-    @endif
-    @yield('content')
-</div>
+
+@if($title!='home')
+    <div class="text-center" style="margin-top:20px"><img width="75px" src="{{asset('images/logo_small.png')}}"/>
+    </div>
+@endif
+@yield('content')
+<div style="margin-bottom:100px;"></div>
 
 <footer class=" footer"
-        style="bottom: 0px;position:absolute;background-color: #8E1069;width:100%;color:white;height:40px;">
-    <div class="container text-center" style="margin-top: 9px;">
+        style="bottom: 0px;position:fixed;background-color: #8E1069;width:100%;color:white;height:40px;">
+    <div class="container text-center" style="">
         <a href="{{url('/home')}}">HOME</a>
         <a href="{{url('/menu')}}">MENU</a>
         <a href="{{url('/restaurants')}}">RESTAURANTS</a>
@@ -38,8 +51,8 @@
         <a href="{{url('/contact')}}">CONTACT</a>
         <a href="{{url('/privacy')}}">PRIVACY</a>
     </div>
-
-
 </footer>
+
+@yield('script')
 </body>
 </html>

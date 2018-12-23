@@ -1,4 +1,4 @@
 @extends('master')
 @section('content')
-    <div>manifesto</div>
+    <div class="container">manifesto</div>
 @endsection

@@ -5,15 +5,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Ingredients</h1>
+    <h1>Orders</h1>
 @stop
 
 @section('content')
-    <p>All the Ingredients</p>
+    <p>All the Orders</p>
 
     <div class="container">
-        <a href="{{url('admin/ingredients/create')}}" style="float: right;" class="btn btn-primary">Add
-            Ingredient</a><br><br><br>
+
         <table class="data-table" class="display" style="width:100%;">
             <thead>
             <tr>

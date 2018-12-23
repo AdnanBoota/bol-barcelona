@@ -210,127 +210,167 @@
 
             font-size: 18px;
         }
+
+        .nav-tabs {
+            border: none;
+            text-align: center;
+        }
+
+        .nav-tabs > li > a {
+            color: black;
+            padding-left: 50px;
+            padding-right: 50px;
+            border: 0px;
+            border-radius: 0px;
+            /*border-top: 2px solid grey;*/
+        }
+
+        .nav-tabs > li {
+            float: none;
+            display: inline-block;
+            zoom: 1;
+            border: 0px;
+            border-radius: 0px;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            background-color: #8E1069;
+            color: white;
+            border: 0px;
+            border-top: 5px solid transparent;
+            border-radius: 0px;
+
+        }
+
+        .nav-tabs > li.active:not > a {
+
+        }
+
+        .tabs_div_content {
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .custom_menu_tabs {
+            display: flex;
+        }
+
+        .custom_menu_tabs li {
+            /*width: 25%;*/
+            flex: auto;
+        }
+
+        .custom_menu_tabs li:active a {
+            border-top: 5px solid lightgray;
+        }
+
+        .custom_menu_tabs li a {
+            font-weight: bold;
+            /*padding: 5px 20px;*/
+            font-size: 20px;
+            border-top: 5px solid lightgray;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .custom_menu_tabs li a:hover {
+            /*border-top: none;*/
+            /*padding-top:5px;*/
+            /*border-top: 5px solid lightgray;*/
+            /*padding-top: 5px;*/
+            /*padding-bottom: 0px;*/
+            /*margin-top: 0px;*/
+            /*margin-bottom: 0px;*/
+
+        }
+
+        .custom_menu_tabs li a span {
+            font-size: 12px;
+
+            font-weight: normal;
+            display: block;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 top_navigation" style="text-align: left">
-                @foreach($bowls as $key => $bowl_group)
-                    <div><a href="#{{$key}}"><img src="https://via.placeholder.com/35x28"/><br>{{$key}}</a></div>
-                    {{--<div><a href="#signature-bols"><img src="https://via.placeholder.com/35x28"/><br>SALADS</a></div>--}}
-                    {{--<div><a href="#"><img src="https://via.placeholder.com/35x28"/><br>WRAP</a></div>--}}
-                    {{--<div><a href="#"><img src="https://via.placeholder.com/35x28"/><br>OTHER</a></div>--}}
-                @endforeach
-            </div>
+            {{--<div class="col-sm-3 top_navigation" style="text-align: left">--}}
 
-            <div class="col-sm-3 col-sm-offset-6" style="text-align: right">
-                <h1 style="text-decoration:underline;font-weight: bold ">PICKUP</h1>
-                <div style="width: 330px;float: right">
-                    <p>Preorder, pick up and enjoy at home or on the road.
-                    </p>
-
+            {{--</div>--}}
+            <div class="col-sm-2" style="font-size:14px;padding:0px;float:left;background-color:  grey;">
+                <div style="padding: 10px;">
+                    <h4>YOUR DISH CONTAINS:</h4>
+                    <ul style="list-style-type: none;">
+                        <li>123</li>
+                        <li>43</li>
+                    </ul>
                 </div>
+                <div style="background-color: #8E1069;color:white;padding: 5px;">TOTAL DISH: 8,9eu</div>
             </div>
+
+            <div class="col-sm-4 col-sm-offset-6" style="text-align: right">
+                <h1 style="text-decoration:underline;font-weight: bold ">YOUR OWN BOWL</h1>
+            </div>
+
         </div>
         <hr>
-        <div class="clearfix row top_ingred_icons">
-            <div class="col-sm-8">
-                <ul>
-                    <li><img width="10px" src="{{asset('images/nav-1.svg')}}"/> <span>VEGAN</span></li>
-                    <li><img width="10px" src="{{asset('images/nav-2.svg')}}"/> <span>GLUTEN FREE</span></li>
-                    <li><img width="10px" src="{{asset('images/nav-3.svg')}}"/> <span>LACTOSE FREEVERSIONS OF ALL DISHES ARE
-                    AVAILABLE UPON REQUEST</span>
-                    </li>
-                    <li><a class="toggle_nav_icons">+ INFO</a></li>
-                </ul>
-            </div>
-            <div class="bucket_cart_parent">
-                <div style="padding-left: 10px;padding-right: 10px;">
-                    <a class="bucket_cart_link_toggle" style="cursor: pointer;text-decoration: none;color:white;">
-                        <i class="fa fa-angle-double-right" style="font-size:32px"></i>
-                    </a>
-                    <span style="float:right;position: relative"><span class="my_order_text">MY ORDER</span> <img
-                                width="35px" style="margin-left:10px;margin-right:10px;"
-                                src="{{asset('images/basket.svg')}}"/>
-                    <span class="basket__countnumber"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">1</font></font></span>
-                <span style="padding-top:5px;float: right; padding-right:5px;">5,85 €</span></span>
-                </div>
-                <div class="bucket_cart">
-                    <ul>
-                        <li>item-1</li>
-                        <li>item-2</li>
-                    </ul>
-                    <hr style="margin:10px;">
-                    <a class="btn btn-primary">CHECK OUT</a>
-                </div>
-            </div>
-            {{--<div class="clearfix"></div>--}}
 
+        <ul class="nav nav-tabs custom_menu_tabs">
+            <li class="active"><a data-toggle="tab" href="#home">1. MAIN COMPONENTS<span>WAHLE 5</span></a>
+            </li>
+            <li class=""><a data-toggle="tab" href="#menu1">2. TUNER<span>WAHLE 4</span></a></li>
+            <li class=""><a data-toggle="tab" href="#menu2">3. DRESSING<span>WAHLE 1</span></a></li>
+            <li class=""><a data-toggle="tab" href="#menu3">4. TOP-UPS<span>EXTRA</span></a></li>
+        </ul>
 
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h3>MAIN COMPONENTS</h3>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+            </div>
+            <div id="menu1" class="tab-pane fade tabs_content">
+                <h3>TUNER</h3>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.</p>
+
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+            </div>
+            <div id="menu2" class="tab-pane fade tabs_content">
+                <h3>DRESSING</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                    totam rem aperiam.</p>
+
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+            </div>
+            <div id="menu3" class="tab-pane fade tabs_content">
+                <h3>TOP-UPS</h3>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                    explicabo.</p>
+
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
+            </div>
         </div>
 
-        <hr>
-
-        <div class="container">
-            @foreach($bowls as $key => $bowl_group)
-                <div class="row" id="{{$key}}">
-                    <div class="line_breaker">
-                        <span>{{typesList($key)}}</span>
-                        <p>MANY DISHES CAN BE MADE VEGAN, GLUTEN-FREE AND LACTOSE FREE</p>
-                    </div>
-                    @foreach($bowl_group as $bowl)
-                        <div class="col-sm-offset-1 col-sm-3 card_product"
-                             data-val="{{json_encode($bowl->ingredients)}}" data-price="{{$bowl->price}}">
-                            <img class="popup_open"
-                                 src="https://via.placeholder.com/300x225"/>
-                            <h3>{{$bowl->name}}</h3>
-                            <p>{{$bowl->description}}</p>
-                            <a href="#">+ ADD TO CART</a>
-                            <span class="item_price">€ {{$bowl->price}}</span>
-                        </div>
-                    @endforeach
-
-                </div>
-            @endforeach
-        </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" style="font-size: 36px;" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title text-center" style="text-decoration: underline">TOP UP YOUR DISH</h3>
-                    <p style="margin-top:10px;font-size: 14px;" class="text-center">Choose as many top ups as you
-                        want!</p>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>2</li>
-                        <li>4</li>
-                    </ul>
-                    <p>SPECIAL INSTRUCTIONS</p>
-                    <textarea
-                            placeholder="Enter your special instructions here. All dishes can be made vegan, gluten-free and lactose free"
-                            style="border-radius: 0px;border: 1px solid #8E1069" required class="form-control"
-                            rows="5" id="comment"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <div style="float: left;font-size: 18px;">
-                        <b>TOTAL DISH: </b><span class="modal_price">12,45</span>
-                    </div>
-                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                    <button type="submit" class="btn btn-dark">ADD TO CART</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
 @endsection
 
 @section('script')

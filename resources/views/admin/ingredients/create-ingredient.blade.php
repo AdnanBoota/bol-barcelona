@@ -9,21 +9,20 @@
     }
 </style>
 @section('content_header')
-    <h1>Create Bowl</h1>
+    <h1>Create Ingredient</h1>
 @stop
 
 @section('content')
-    <p>Add a new Bowl</p>
+    <p>Add a new Ingredient</p>
     <div class="container">
         <div class="row contact_form" style="margin-top:5%;">
             <div class="col-sm-8 col-sm-offset-2">
                 @if(isset($record))
-                    {{ Form::model($record, ['route' => ['bowls.update', $record->id], 'method' => 'patch']) }}
+                    {{ Form::model($record, ['route' => ['ingredients.update', $record->id], 'method' => 'patch']) }}
                 @else
-                    {{ Form::open(['route' => 'bowls.store']) }}
+                    {{ Form::open(['route' => 'ingredients.store']) }}
                 @endif
                 {{ csrf_field() }}
-                {{--<div>--}}
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -31,14 +30,6 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="name">Type</label>
-                        {{Form::select('type',$listValues,\Illuminate\Support\Facades\Input::old('type'),['name'=>'type','class'=>'select2','required'=>'required'])}}
-                    </div>
-                </div>
-                {{--</div>--}}
-                <div class="clearfix"></div>
-                <div class="clearfix col-sm-6">
                     <div class="form-group">
                         <label for="email">Price</label>
                         {{ Form::number('price',isset($record) ? $record->price:'0.00',['class'=>'form-control','step'=>'0.01','min'=>'0.00','required'=>'required']) }}
@@ -48,12 +39,6 @@
                     <div class="form-group">
                         <label for="email">Specifications</label>
                         {{Form::select('specs',$specsValues,isset($record) ? json_decode($record->specs):null,['multiple'=>'true','name'=>'specs[]','class'=>'select2','required'=>'required'])}}
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label for="email">Description</label>
-                        {!! Form::textarea('description', null, ['class'=>'form-control','rows'=>5,'required'=>'required']) !!}
                     </div>
                 </div>
 

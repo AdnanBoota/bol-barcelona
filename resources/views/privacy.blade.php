@@ -1,4 +1,4 @@
 @extends('master')
 @section('content')
-    <div>privacy</div>
+    <div class="container">privacy</div>
 @endsection

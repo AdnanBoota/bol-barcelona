@@ -114,32 +114,42 @@ return [
             'url' => 'admin/pages',
             'icon' => 'file',
             'label' => 4,
-            'label_color' => 'success',
+            'label_color' => 'warning',
         ],
         'Orders Information',
         [
-            'text' => 'Blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
             'text' => 'Orders',
-            'url' => 'admin/pages',
+            'url' => 'admin/orders',
             'icon' => 'file',
-            'label' => 4,
+            'label' => 3,
             'label_color' => 'success',
         ],
+        'Bowls Information',
         [
-            'text' => 'Products',
+            'text' => 'Bowls',
             'icon' => 'share',
             'submenu' => [
                 [
-                    'text' => 'All Products',
-                    'url' => '#',
+                    'text' => 'All Bowls',
+                    'url' => 'admin/bowls',
                 ],
                 [
-                    'text' => 'Create Product',
-                    'url' => '#',
+                    'text' => 'Create bowl',
+                    'url' => 'admin/bowls/create',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Ingredients',
+            'icon' => 'share',
+            'submenu' => [
+                [
+                    'text' => 'All Ingredients',
+                    'url' => 'admin/ingredients',
+                ],
+                [
+                    'text' => 'Create Ingredient',
+                    'url' => 'admin/ingredients/create',
                 ],
             ],
         ],
@@ -149,42 +159,28 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Vouchers',
-                    'url' => '#',
+                    'url' => 'admin/vouchers',
                 ],
                 [
                     'text' => 'Create Voucher',
-                    'url' => '#',
+                    'url' => 'admin/vouchers/create',
                 ],
             ],
         ],
-        [
-            'text' => 'Bowls',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Bowls',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Create bowl',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Payment Methods',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Payments',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Create Payment',
-                    'url' => '#',
-                ],
-            ],
-        ],
+//        [
+//            'text' => 'Payment Methods',
+//            'icon' => 'share',
+//            'submenu' => [
+//                [
+//                    'text' => 'All Payments',
+//                    'url' => '#',
+//                ],
+//                [
+//                    'text' => 'Create Payment',
+//                    'url' => '#',
+//                ],
+//            ],
+//        ],
         'ACCOUNT SETTINGS',
 //        [
 //            'text' => 'Profile',
