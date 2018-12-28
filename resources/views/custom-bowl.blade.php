@@ -467,25 +467,21 @@
 
         $('.top_cart_add_button').click(function () {
 
-            var count_obj = [];
-            $('.cart_item_list').find('li').each(function () {
-                var category = $(this).data("category");
-                var value = $(this).data("value");
-                if (count_obj[category] == undefined)
-                    count_obj.push({category: 0});
-                // console.log($(this).data("category"), $(this).data("value"));
-                count_obj[category]++;
-            });
-            console.log(count_obj);
-
-            // $('.summary_ul').html('');
-
-
-            $.each(count_obj, function (key, value) {
-                console.log('coming here');
-                $('.summary_ul').append('<li>' + key + ' : ' + value + '</li>');
+            var category, count_obj = {};
+            $('.cart_item_list li[data-category]').each(function (i, el) {
+                category = $(el).data('category');
+                if (count_obj.hasOwnProperty(category)) {
+                    count_obj[category] += 1;
+                } else {
+                    count_obj[category] = 1;
+                }
             });
 
+            $('.summary_ul').html('');
+
+            for (var key in count_obj) {
+                $('.summary_ul').append('<li>' + key + ' : ' + count_obj[key] + '</li>');
+            }
 
             $('#myModal').modal('show');
         });
