@@ -154,6 +154,20 @@ return [
             ],
         ],
         [
+            'text' => 'Custom Bowl Ingredients',
+            'icon' => 'share',
+            'submenu' => [
+                [
+                    'text' => 'All Custom Bowl Ingredients',
+                    'url' => 'admin/custom-ingredients',
+                ],
+                [
+                    'text' => 'Create Custom Bowl Ingredient',
+                    'url' => 'admin/custom-ingredients/create',
+                ],
+            ],
+        ],
+        [
             'text' => 'Vouchers',
             'icon' => 'share',
             'submenu' => [

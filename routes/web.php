@@ -26,6 +26,7 @@ Route::prefix('admin')->group(function () {
     Route::resources([
         'bowls' => 'BowlsController',
         'ingredients' => 'IngredientsController',
+        'custom-ingredients' => 'CustomIngredientsController',
         'vouchers' => 'VouchersController',
         'orders' => 'OrdersController',
     ]);
@@ -60,9 +61,8 @@ Route::get('/{slug}', function ($slug) {
     }
 
     if ($slug == 'custom-bowl') {
-//        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
-//        dd($bowls);
-        return view($slug, ['title' => $slug])->render();
+        $ingreds = \App\CustomIngredients::get()->groupBy('category');
+        return view($slug, ['title' => $slug, 'ingreds' => $ingreds])->render();
     }
 
     if (view()->exists($slug)) {

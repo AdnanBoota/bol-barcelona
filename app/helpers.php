@@ -70,3 +70,17 @@ function specsList($key = null)
 
     return $specList;
 }
+
+function customIngredientCategory($key = null)
+{
+    $customIngred = [
+        '' => 'Select Value',
+        'main-components' => 'Main Components',
+        'tuner' => 'Tuner',
+        'dressing' => 'Dressing',
+        'top-ups' => 'Top-Ups',
+    ];
+
+    if ($key != null) return $customIngred[$key];
+    return $customIngred;
+}

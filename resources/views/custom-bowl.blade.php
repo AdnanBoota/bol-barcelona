@@ -101,19 +101,18 @@
         }
 
         .modal-dialog {
-            width: 800px;
+            width: 400px;
         }
 
         .modal-body ul {
             padding: 5px;
-            font-size: 16px;
+            font-size: 12px;
         }
 
         .modal-body ul li {
             text-transform: uppercase;
-            list-style-type: none;
-            border-bottom: 1px solid #cbcbcb;
-            padding: 10px;
+            padding: 2px;
+            font-weight: bold;
         }
 
         .modal-body ul li .item_price {
@@ -247,9 +246,35 @@
         }
 
         .tabs_div_content {
+            width: 225px;
+            height: 250px;
             display: inline-block;
             padding: 10px;
+
+            text-align: center;
+            margin: 15px;
+            cursor: pointer;
         }
+
+        .single_prod {
+            border: 2px solid lightgrey;
+        }
+
+        .single_prod_selected {
+            border: 2px solid #8E1069;
+        }
+
+        .tabs_div_content img {
+            margin-top: 10px;
+        }
+
+        .tabs_div_content .prod_name {
+            font-size: 18px;
+            display: block;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
 
         .custom_menu_tabs {
             display: flex;
@@ -290,161 +315,200 @@
             font-weight: normal;
             display: block;
         }
+
+        .cross_button {
+            text-align: right;
+            color: white;
+            float: right;
+        }
+
+        .cross_button:hover {
+            color: #8E1069;
+        }
+
+        .cart_item_selected {
+            border: 1px solid black;
+            background-color: #212121;
+            color: white;
+            padding-right: 5px;
+            padding-left: 5px;
+            text-transform: uppercase;
+        }
+
+        .affix {
+            top: 0;
+            width: 100%;
+            z-index: 9999 !important;
+        }
+
+        .cart_set {
+            top: 0;
+            /*right: 100;*/
+            /*width: 100%;*/
+            z-index: 9999 !important;
+        }
+
+        .cart_set + .container-fluid {
+            padding-top: 100px;
+        }
+
+        .affix + .container-fluid {
+            padding-top: 70px;
+        }
+
+        .cart_item_list, .summary_ul {
+            list-style-type: none;
+            padding: 0px;
+        }
+
+        .cart_item_list li {
+            margin-top: 5px;
+        }
+
+        .top_cart_add_button {
+            background-color: black;
+            border: black;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            {{--<div class="col-sm-3 top_navigation" style="text-align: left">--}}
-
-            {{--</div>--}}
-            <div class="col-sm-2" style="font-size:14px;padding:0px;float:left;background-color:  grey;">
-                <div style="padding: 10px;">
-                    <h4>YOUR DISH CONTAINS:</h4>
-                    <ul style="list-style-type: none;">
-                        <li>123</li>
-                        <li>43</li>
-                    </ul>
+            <div>
+                <div data-spy="cart_set" data-offset-top="150" class=""
+                     style="font-size:14px;padding:0px;float:left;background-color:  lightgrey;margin-left:15px;">
+                    <div style="padding: 10px;">
+                        <h4>YOUR DISH CONTAINS:</h4>
+                        <ul class="cart_item_list"></ul>
+                    </div>
+                    <div style="background-color: #8E1069;color:white;padding: 5px;text-align: center">TOTAL DISH:
+                        <span style="font-weight: bold">8,9  €</span>
+                    </div>
+                    <div style="text-align: center;margin: 10px;">
+                        <button class="btn btn-sm top_cart_add_button">ADD TO CART</button>
+                    </div>
                 </div>
-                <div style="background-color: #8E1069;color:white;padding: 5px;">TOTAL DISH: 8,9eu</div>
             </div>
+
 
             <div class="col-sm-4 col-sm-offset-6" style="text-align: right">
                 <h1 style="text-decoration:underline;font-weight: bold ">YOUR OWN BOWL</h1>
             </div>
-
         </div>
+
         <hr>
 
-        <ul class="nav nav-tabs custom_menu_tabs">
-            <li class="active"><a data-toggle="tab" href="#home">1. MAIN COMPONENTS<span>WAHLE 5</span></a>
-            </li>
-            <li class=""><a data-toggle="tab" href="#menu1">2. TUNER<span>WAHLE 4</span></a></li>
-            <li class=""><a data-toggle="tab" href="#menu2">3. DRESSING<span>WAHLE 1</span></a></li>
-            <li class=""><a data-toggle="tab" href="#menu3">4. TOP-UPS<span>EXTRA</span></a></li>
+        <ul class="nav nav-tabs custom_menu_tabs" data-spy="affix" data-offset-top="150">
+            @foreach($ingreds as $key => $ingred)
+                <li class="{{$loop->first==1 ? 'active':''}}"><a style="text-transform: uppercase" data-toggle="tab"
+                                                                 href="#{{$key}}">1. {{customIngredientCategory($key)}}
+                        <span> {{$loop->first}}WAHLE 5</span></a>
+                </li>
+            @endforeach
         </ul>
 
         <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h3>MAIN COMPONENTS</h3>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-            </div>
-            <div id="menu1" class="tab-pane fade tabs_content">
-                <h3>TUNER</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.</p>
+            @foreach($ingreds as $key=>$ingred)
+                <div id="{{$key}}" class="tab-pane fade {{$loop->first==1 ? 'in active':''}} tabs_content">
+                    <h3 style="text-transform: uppercase">{{customIngredientCategory($key)}}</h3>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat.</p>
 
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-            </div>
-            <div id="menu2" class="tab-pane fade tabs_content">
-                <h3>DRESSING</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam rem aperiam.</p>
+                    @foreach($ingred as $record)
+                        <div class="tabs_div_content single_prod"
+                             data-value="{{$record->id}}" data-category="{{$record->category}}">
+                            <span style=" text-align: right;font-size:14px;color:grey;display: block">{{$record->description}}</span>
+                            <img src="https://via.placeholder.com/125x125"/>
+                            <span class="prod_name">{{$record->name}}</span>
+                            <button style="float: right;display: block;margin-top:10px;"
+                                    class="btn btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-            </div>
-            <div id="menu3" class="tab-pane fade tabs_content">
-                <h3>TOP-UPS</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                    explicabo.</p>
+                            </button>
+                        </div>
+                    @endforeach
 
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-                <div class="tabs_div_content"><img src="https://via.placeholder.com/225x275"/></div>
-            </div>
+                </div>
+            @endforeach
+
         </div>
 
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" style="font-size: 36px;" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title text-center" style="text-decoration: underline">REMARK</h3>
+                    <p style="margin-top:10px;font-size: 14px;" class="text-center">You have the following items:</p>
+                </div>
+                <div class="modal-body">
+                    <ul class="summary_ul">
+                        <li>2. MAIN COMPONENTS: 5/5</li>
+                        <li>TUNER: 4/4</li>
+                        <li> 4. DRESSING: 1/1</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">ADD TO CART</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script>
-        var bowl_price, current_total;
-        var assets_url = '{!! asset('images/') !!}';
 
-        $('[data-toggle="tooltip"]').tooltip();
+        $('.top_cart_add_button').click(function () {
 
-        $(".popup_open").click(function () {
-//            alert('coming here');
-            console.log($(this).parent().data('val'));
-            var items = $(this).parent().data('val');
-            bowl_price = $(this).parent().data('price');
-            current_total = 0;
-            var items_html = '';
-            $.each(items, function (key, value) {
-                items_html += '<li class="single_item_ingred" data-val="' + value.price + '"><a class="btn btn-sm btn-primary add_remove"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> <span class="item_text">' + value.name + '</span> <span class="item_price">' + value.price + '€ ' + ingredImages(value.specs) + '</span></li>';
-//                alert(key + ": " + value);
+            var count_obj = [];
+            $('.cart_item_list').find('li').each(function () {
+                var category = $(this).data("category");
+                var value = $(this).data("value");
+                if (count_obj[category] == undefined)
+                    count_obj.push({category: 0});
+                // console.log($(this).data("category"), $(this).data("value"));
+                count_obj[category]++;
             });
-            $('.modal-body').find('ul').html(items_html);
-            $('.modal_price').html($(this).parent().find('.item_price').html());
+            console.log(count_obj);
+
+            // $('.summary_ul').html('');
+
+
+            $.each(count_obj, function (key, value) {
+                console.log('coming here');
+                $('.summary_ul').append('<li>' + key + ' : ' + value + '</li>');
+            });
+
+
             $('#myModal').modal('show');
         });
 
-        $(document).on('click', '.single_item_ingred', function (event) {
-//            alert('coming here');
-            var current_item_price = $(this).data('val');
-            $(this).toggleClass('ingred_selected'); //added class
+        $(document).on('click', '.cross_button', function (event) {
+            var closest_div = $(".tabs_content").find('.tabs_div_content[data-value="' + $(this).parent().data('value') + '"]');
+            closest_div.toggleClass('single_prod single_prod_selected');
+            closest_div.find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
+            $(this).parent().remove();
+        });
 
-            if ($(this).hasClass('ingred_selected')) {
-                $(this).find('.add_remove').html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
-                if (current_total == 0) {
-                    current_total = parseFloat(current_item_price) + parseFloat(bowl_price);
-                } else {
-                    current_total = parseFloat(current_item_price) + parseFloat(current_total);
-                }
-                $('.modal_price').html('€ ' + current_total.toFixed(2));
+        $(".tabs_div_content").click(function () {
+            $(this).find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
+            $(this).toggleClass('single_prod single_prod_selected');
+            // console.log($(this).find('.glyphicon').hasClass('glyphicon-minus'));
+            if ($(this).find('.glyphicon').hasClass('glyphicon-minus') == true) {
+                var li_html = '<li data-category="' + $(this).data('category') + '" data-value="' + $(this).data('value') + '" class="cart_item_selected">' + $(this).find('.prod_name').text() + ' <a href="#" class="cross_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>';
+                $('.cart_item_list').append(li_html);
             } else {
-                $(this).find('.add_remove').html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>');
-//                sub_total = current_total - current_item_price;
-                current_total = current_total - current_item_price;
-                $('.modal_price').html('€ ' + current_total.toFixed(2));
+                console.log('removing item');
+                $('.cart_item_list').find("li[data-value='" + $(this).data('value') + "']").remove();
             }
-
         });
-
-        $(".toggle_nav_icons").click(function () {
-//            alert('hola');
-            $(this).parent().parent().find('span').toggle(200);
-        });
-
-        $(".bucket_cart_link_toggle").click(function () {
-            $(".bucket_cart").toggle(300);
-//            $(".bucket_cart,.my_order_text").toggle(300);
-//            $(".bucket_cart_parent").css('width', '200px');
-        });
-
-        $(document).on('click', 'a[href^="#"]', function (event) {
-            event.preventDefault();
-
-            $('html, body').animate({
-                scrollTop: $($.attr(this, 'href')).offset().top
-            }, 800);
-        });
-
-
-        function ingredImages(names) {
-            var html = '';
-            $.each(JSON.parse(names), function (key, value) {
-                html += '<a class="link_tooltip" data-toggle="tooltip" title="' + value + '"> <img width="10px" src="' + assets_url + '/nav-' + (key + 1) + '.svg"/></a>';
-            });
-            return html;
-        }
 
     </script>
 @endsection
