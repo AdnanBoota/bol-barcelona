@@ -177,6 +177,7 @@ return [
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Ssheduardo\Redsys\RedsysServiceProvider::class
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Redsys' => Ssheduardo\Redsys\Facades\Redsys::class,
 
     ],
 

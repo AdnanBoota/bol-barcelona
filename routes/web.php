@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
     ]);
 });
 
+Route::get('/redsys', ['as' => 'redsys', 'uses' => 'RedsysController@index']);
 //$2y$10$ECfrV7WW3Xk99/bzLx2Fku5cbLUpT3E3p4b/yPjqVgC95CQR/BCBC
 Route::get('/{slug}', function ($slug) {
 //    dd($slug);
