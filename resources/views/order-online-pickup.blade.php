@@ -337,8 +337,10 @@
     <script>
         var bowl_price, current_total, all_total;
         var assets_url = '{!! asset('images/') !!}';
+        var base_url = '{!! url('/') !!}';
         var current_bowl;
         var cart_details = {};
+        console.log(base_url);
 
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -372,7 +374,7 @@
 
         $('.final_checkout').click(function () {
             console.log(cart_details);
-            document.location.href = "http://localhost:8000/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
+            document.location.href = base_url + "/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
         });
 
         $(".modal_add_to_cart").click(function () {
