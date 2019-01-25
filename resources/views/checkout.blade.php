@@ -271,7 +271,9 @@
         <hr>
         <div class="clearfix row">
             <ul>
-                <li>NEW AVOCADO BOWL <span>9.5</span></li>
+                @foreach($cart_items as $item)
+                    <li>{{$item->name}} <span style="float: right">€ {{$item->price}}</span></li>
+                @endforeach
             </ul>
         </div>
         <hr>
@@ -290,8 +292,8 @@
 
         <div class="col-sm-12 summary_total">
             <div class="col-sm-4">TOTAL:</div>
-            <div class="col-sm-4" style="text-align: center">1 ARTICLE</div>
-            <div class="col-sm-4" style="text-align: right">9.25</div>
+            <div class="col-sm-4" style="text-align: center">{{\Gloudemans\Shoppingcart\Facades\Cart::count()}} ARTICLE</div>
+            <div class="col-sm-4" style="text-align: right">€ {{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</div>
         </div>
         <div class="clearfix"></div>
 

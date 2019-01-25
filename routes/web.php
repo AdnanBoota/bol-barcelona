@@ -11,6 +11,8 @@
 |
 */
 
+use \Gloudemans\Shoppingcart\Facades\Cart;
+
 Route::get('/', function () {
     return view('home', ['title' => 'home']);
 });
@@ -56,9 +58,19 @@ Route::get('/{slug}', function ($slug) {
     }
 
     if ($slug == 'checkout') {
+        $items = Request::input('items');
+        $items = json_decode($items);
+
+        Cart::destroy();
+        foreach ($items as $item) {
+            Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
+        }
+
+        $cart_items = Cart::content();
+//        dd(Cart::content());
 //        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
 //        dd($bowls);
-        return view($slug, ['title' => $slug])->render();
+        return view($slug, ['title' => $slug, 'cart_items' => $cart_items])->render();
     }
 
     if ($slug == 'custom-bowl') {
