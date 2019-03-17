@@ -254,16 +254,16 @@
                                 width="35px" style="margin-left:10px;margin-right:10px;"
                                 src="{{asset('images/basket.svg')}}"/>
                     <span class="basket__countnumber"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">1</font></font></span>
-                <span style="padding-top:5px;float: right; padding-right:5px;">5,85 €</span></span>
+                                    class="basket_counter" style="vertical-align: inherit;">0</font></font></span>
+                <span class="span_cart_price"
+                      style="padding-top:5px;float: right; padding-right:5px;">0,00 €</span></span>
                 </div>
                 <div class="bucket_cart">
                     <ul>
-                        <li>item-1</li>
-                        <li>item-2</li>
+
                     </ul>
                     <hr style="margin:10px;">
-                    <a class="btn btn-primary">CHECK OUT</a>
+                    <a class="btn btn-primary final_checkout">CHECK OUT</a>
                 </div>
             </div>
             {{--<div class="clearfix"></div>--}}
@@ -281,7 +281,7 @@
                         <p>MANY DISHES CAN BE MADE VEGAN, GLUTEN-FREE AND LACTOSE FREE</p>
                     </div>
                     @foreach($bowl_group as $bowl)
-                        <div class="col-sm-offset-1 col-sm-3 card_product"
+                        <div class="col-sm-offset-1 col-sm-3 card_product" data-bowl="{{json_encode($bowl)}}"
                              data-val="{{json_encode($bowl->ingredients)}}" data-price="{{$bowl->price}}">
                             <img class="popup_open"
                                  src="https://via.placeholder.com/300x225"/>
@@ -325,7 +325,7 @@
                         <b>TOTAL DISH: </b><span class="modal_price">12,45</span>
                     </div>
                     {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                    <button type="submit" class="btn btn-dark">ADD TO CART</button>
+                    <button type="submit" class="btn btn-dark modal_add_to_cart">ADD TO CART</button>
                 </div>
             </div>
 
@@ -335,20 +335,36 @@
 
 @section('script')
     <script>
-        var bowl_price, current_total;
+        var bowl_price, current_total, all_total;
         var assets_url = '{!! asset('images/') !!}';
+        var base_url = '{!! url('/') !!}';
+        var current_bowl;
+        var cart_details = {};
+        console.log(base_url);
 
         $('[data-toggle="tooltip"]').tooltip();
 
         $(".popup_open").click(function () {
 //            alert('coming here');
-            console.log($(this).parent().data('val'));
+            var bowl_info = $(this).parent().data('bowl');
+            console.log($(this).parent().data('bowl'));
+            current_bowl = bowl_info.name;
+            var my_bowl = {
+                id: bowl_info.id,
+                name: bowl_info.name,
+                price: bowl_info.price,
+                total: bowl_info.price,
+                items: {},
+                text: ''
+            };
+            cart_details[current_bowl] = my_bowl;
             var items = $(this).parent().data('val');
             bowl_price = $(this).parent().data('price');
             current_total = 0;
             var items_html = '';
             $.each(items, function (key, value) {
-                items_html += '<li class="single_item_ingred" data-val="' + value.price + '"><a class="btn btn-sm btn-primary add_remove"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> <span class="item_text">' + value.name + '</span> <span class="item_price">' + value.price + '€ ' + ingredImages(value.specs) + '</span></li>';
+                // console.log(JSON.stringify(value));
+                items_html += '<li class="single_item_ingred" data-name="' + value.name + '" data-id="' + value.id + '" data-val="' + value.price + '"><a class="btn btn-sm btn-primary add_remove"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> <span class="item_text">' + value.name + '</span> <span class="item_price">' + value.price + '€ ' + ingredImages(value.specs) + '</span></li>';
 //                alert(key + ": " + value);
             });
             $('.modal-body').find('ul').html(items_html);
@@ -356,8 +372,49 @@
             $('#myModal').modal('show');
         });
 
+        $('.final_checkout').click(function () {
+            console.log(cart_details);
+            document.location.href = base_url + "/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
+        });
+
+        $(".modal_add_to_cart").click(function () {
+            //added items
+            //text
+            //total price
+            //bowl info
+            //update cart
+
+            var comment_text = $('#comment').val();
+            var cart_html = '';
+            cart_details[current_bowl]['text'] = comment_text;
+            console.log(cart_details);
+            all_total = 0;
+            $.each(cart_details, function (key, value) {
+                cart_html += '<li data-name="' + value.name + '" data-total=" + value.total + ">' + value.name + ' - ' + value.total + '  <a class="bucket_item_remove" style="float: right;margin-right:10px;"><i class="fa fa-minus" style="font-size:22px"></i></a></li>';
+                all_total += parseFloat(value.total);
+            });
+
+            $('.span_cart_price').html(all_total.toFixed(2) + ' €');
+            $('.bucket_cart ul').html(cart_html);
+            $('.basket_counter').html(Object.keys(cart_details).length);
+            $('#myModal').modal('hide');
+        });
+
+        $(document).on('click', '.bucket_item_remove', function (event) {
+            delete cart_details[$(this).parent().data('name')];
+            all_total = 0;
+            $.each(cart_details, function (key, value) {
+                all_total += parseFloat(value.total);
+            });
+            $('.span_cart_price').html(all_total.toFixed(2) + ' €');
+            $(this).parent().remove();
+            $('.basket_counter').html(Object.keys(cart_details).length);
+        });
+
         $(document).on('click', '.single_item_ingred', function (event) {
 //            alert('coming here');
+            var current_item_id = $(this).data('id');
+            var current_item_name = $(this).data('name');
             var current_item_price = $(this).data('val');
             $(this).toggleClass('ingred_selected'); //added class
 
@@ -369,14 +426,21 @@
                     current_total = parseFloat(current_item_price) + parseFloat(current_total);
                 }
                 $('.modal_price').html('€ ' + current_total.toFixed(2));
+                cart_details[current_bowl]['items'][current_item_id] = {
+                    name: current_item_name,
+                    price: current_item_price
+                };
             } else {
                 $(this).find('.add_remove').html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>');
 //                sub_total = current_total - current_item_price;
                 current_total = current_total - current_item_price;
                 $('.modal_price').html('€ ' + current_total.toFixed(2));
+                delete cart_details[current_bowl]['items'][current_item_id];
             }
-
+            cart_details[current_bowl]['total'] = current_total.toFixed(2);
+            console.log(cart_details);
         });
+
 
         $(".toggle_nav_icons").click(function () {
 //            alert('hola');
