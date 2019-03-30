@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'Bol Barcelona',
 
     'title_prefix' => '',
 
@@ -112,75 +112,89 @@ return [
         [
             'text' => 'Dashboard',
             'url' => 'admin/pages',
-            'icon' => 'file',
-            'label' => 4,
-            'label_color' => 'warning',
+            'icon' => 'home',
         ],
-        'Orders Information',
-        [
-            'text' => 'Orders',
-            'url' => 'admin/orders',
-            'icon' => 'file',
-            'label' => 3,
-            'label_color' => 'success',
-        ],
-        'Bowls Information',
-        [
-            'text' => 'Bowls',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Bowls',
-                    'url' => 'admin/bowls',
-                ],
-                [
-                    'text' => 'Create bowl',
-                    'url' => 'admin/bowls/create',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Ingredients',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Ingredients',
-                    'url' => 'admin/ingredients',
-                ],
-                [
-                    'text' => 'Create Ingredient',
-                    'url' => 'admin/ingredients/create',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Custom Bowl Ingredients',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Custom Bowl Ingredients',
-                    'url' => 'admin/custom-ingredients',
-                ],
-                [
-                    'text' => 'Create Custom Bowl Ingredient',
-                    'url' => 'admin/custom-ingredients/create',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Vouchers',
-            'icon' => 'share',
-            'submenu' => [
-                [
-                    'text' => 'All Vouchers',
-                    'url' => 'admin/vouchers',
-                ],
-                [
-                    'text' => 'Create Voucher',
-                    'url' => 'admin/vouchers/create',
-                ],
-            ],
-        ],
+        // 'Orders Information',
+        // [
+        //     'text' => 'Orders',
+        //     'url' => 'admin/orders',
+        //     'icon' => 'cart-arrow-down',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        // ],
+        // 'Bowls Information',
+        // [
+        //     'text' => 'Bowls',
+        //     'icon' => 'archive',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'All Bowls',
+        //             'url' => 'admin/bowls',
+        //             'icon' => 'plus-square',
+        //         ],
+        //         [
+        //             'text' => 'Create bowl',
+        //             'url' => 'admin/bowls/create',
+        //             'icon' => 'spinner',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Ingredients',
+        //     'icon' => 'cubes',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'All Ingredients',
+        //             'url' => 'admin/ingredients',
+        //             'icon' => 'plus-square',
+        //         ],
+        //         [
+        //             'text' => 'Create Ingredient',
+        //             'url' => 'admin/ingredients/create',
+        //             'icon' => 'spinner',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Custom Ingredients',
+        //     'icon' => 'bolt',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'All Custom Ingredients',
+        //             'url' => 'admin/custom-ingredients',
+        //             'icon' => 'plus-square',
+        //         ],
+        //         [
+        //             'text' => 'Create Custom Ingredient',
+        //             'url' => 'admin/custom-ingredients/create',
+        //             'icon' => 'spinner',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Vouchers',
+        //     'icon' => 'sticky-note',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'All Vouchers',
+        //             'url' => 'admin/vouchers',
+        //             'icon' => 'plus-square',
+        //         ],
+        //         [
+        //             'text' => 'Create Voucher',
+        //             'url' => 'admin/vouchers/create',
+        //             'icon' => 'spinner',
+        //         ],
+        //     ],
+        // ],
 //        [
 //            'text' => 'Payment Methods',
 //            'icon' => 'share',
@@ -195,22 +209,22 @@ return [
 //                ],
 //            ],
 //        ],
-        'ACCOUNT SETTINGS',
+        // 'ACCOUNT SETTINGS',
 //        [
 //            'text' => 'Profile',
 //            'url' => 'admin/settings',
 //            'icon' => 'user',
 //        ],
-        [
-            'text' => 'Change Password',
-            'url' => 'admin/settings',
-            'icon' => 'lock',
-        ],
-        [
-            'text' => 'Logout',
-            'url' => 'admin/settings',
-            'icon' => 'lock',
-        ],
+        // [
+        //     'text' => 'Change Password',
+        //     'url' => 'admin/settings',
+        //     'icon' => 'lock',
+        // ],
+        // [
+        //     'text' => 'Logout',
+        //     'url' => 'admin/settings',
+        //     'icon' => 'power-off',
+        // ],
 
 //        'LABELS',
 //        [

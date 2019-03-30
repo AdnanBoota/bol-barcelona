@@ -43,6 +43,7 @@
             <i style="font-size:20px" class="fa fa-google"></i></a>
         <a target="_blank" href="https://foursquare.com/v/bol/5ac4914697cf5a20fca091a8"><i style="font-size:20px" class="fa fa-foursquare"></i></a>
         <a target="_blank" href="https://www.tripadvisor.co.za/LocationPhotoDirectLink-g187497-d14079130-i318795334-Bol-Barcelona_Catalonia.html"><i style="font-size:20px" class="fa fa-tripadvisor"></i></a>
+        <a target="_blank" href="https://www.instagram.com/bolbarcelona/"><i style="font-size:20px" class="fa fa-instagram"></i></a>
     </div>
     </div>
 </footer>

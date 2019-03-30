@@ -15,21 +15,22 @@ use \Gloudemans\Shoppingcart\Facades\Cart;
 
 
 Route::get('/', function () {
+    return view('home-test', ['title' => 'Test Page']);
     return view('home', ['title' => 'home']);
 });
 
-Route::get('/test', function () {
-    return view('home-test', ['title' => 'Test Page']);
-});
+// Route::get('/test', function () {
+//     return view('home-test', ['title' => 'Test Page']);
+// });
 
-Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/admin', function () {
-    //    dd(\Illuminate\Support\Facades\Hash::make('admin'));
-    return view('admin/admin');
-});
 //->middleware('auth')
-Route::prefix('admin')->group(function () {
+Route::group(['middleware' => ['auth:web'], 'prefix' => 'admin'], function () {
+    Route::get('/', function () {
+        return view('admin/admin');
+    });
     Route::resources([
         'bowls' => 'BowlsController',
         'ingredients' => 'IngredientsController',
@@ -38,6 +39,7 @@ Route::prefix('admin')->group(function () {
         'orders' => 'OrdersController',
     ]);
 });
+
 
 Route::get('/redsys', ['as' => 'redsys', 'uses' => 'RedsysController@index']);
 //$2y$10$ECfrV7WW3Xk99/bzLx2Fku5cbLUpT3E3p4b/yPjqVgC95CQR/BCBC
