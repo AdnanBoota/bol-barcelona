@@ -38,11 +38,11 @@
         style="bottom: 0px;position:fixed;background-color: #8E1069;width:100%;color:white;height:40px;">
     <div class="container">
     <div style="text-align:right">
-        <a href="https://www.facebook.com/bolbarcelona/"><i style="font-size:20px" class="fa fa-facebook"></i></a>
-        <a href="https://www.google.com/maps/place/B%C3%B6l/@41.3911103,2.1581842,15z/data=!4m2!3m1!1s0x0:0x1a8924658979c82f?sa=X&ved=2ahUKEwj85Ke766rhAhUM8uAKHQJOCbUQ_BIwCnoECAoQCA">
+        <a target="_blank" href="https://www.facebook.com/bolbarcelona/"><i style="font-size:20px" class="fa fa-facebook"></i></a>
+        <a target="_blank" href="https://www.google.com/maps/place/B%C3%B6l/@41.3911103,2.1581842,15z/data=!4m2!3m1!1s0x0:0x1a8924658979c82f?sa=X&ved=2ahUKEwj85Ke766rhAhUM8uAKHQJOCbUQ_BIwCnoECAoQCA">
             <i style="font-size:20px" class="fa fa-google"></i></a>
-        <a href="https://foursquare.com/v/bol/5ac4914697cf5a20fca091a8"><i style="font-size:20px" class="fa fa-foursquare"></i></a>
-        <a href="https://www.tripadvisor.co.za/LocationPhotoDirectLink-g187497-d14079130-i318795334-Bol-Barcelona_Catalonia.html"><i style="font-size:20px" class="fa fa-tripadvisor"></i></a>
+        <a target="_blank" href="https://foursquare.com/v/bol/5ac4914697cf5a20fca091a8"><i style="font-size:20px" class="fa fa-foursquare"></i></a>
+        <a target="_blank" href="https://www.tripadvisor.co.za/LocationPhotoDirectLink-g187497-d14079130-i318795334-Bol-Barcelona_Catalonia.html"><i style="font-size:20px" class="fa fa-tripadvisor"></i></a>
     </div>
     </div>
 </footer>
