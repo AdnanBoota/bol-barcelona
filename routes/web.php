@@ -16,12 +16,12 @@ use \Gloudemans\Shoppingcart\Facades\Cart;
 
 Route::get('/', function () {
     return view('home-test', ['title' => 'Test Page']);
-    return view('home', ['title' => 'home']);
+   
 });
 
-// Route::get('/test', function () {
-//     return view('home-test', ['title' => 'Test Page']);
-// });
+Route::get('/test', function () {
+    return view('home', ['title' => 'home']);
+});
 
 Auth::routes(['register' => false]);
 Route::get('/logout', 'Auth\LoginController@logout');
