@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', function () {
-//    dd(\Illuminate\Support\Facades\Hash::make('admin'));
+    //    dd(\Illuminate\Support\Facades\Hash::make('admin'));
     return view('admin/admin');
 });
 //->middleware('auth')
@@ -33,15 +33,15 @@ Route::prefix('admin')->group(function () {
         'orders' => 'OrdersController',
     ]);
 });
-
-Route::get('/redsys', ['as' => 'redsys', 'uses' => 'RedsysController@index']);
+Route::post('/redsys_payment', 'RedsysController@index');
+// Route::get('/redsys', ['as' => 'redsys', 'uses' => 'RedsysController@index']);
 //$2y$10$ECfrV7WW3Xk99/bzLx2Fku5cbLUpT3E3p4b/yPjqVgC95CQR/BCBC
 Route::get('/{slug}', function ($slug) {
-//    dd($slug);
+    //    dd($slug);
 
     if ($slug == 'file') {
         $name = Request::input('name');
-//        dd($name);
+        //        dd($name);
         $filename = $name . '.pdf';
         $path = storage_path($filename);
 
@@ -53,7 +53,7 @@ Route::get('/{slug}', function ($slug) {
 
     if ($slug == 'order-online-pickup') {
         $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
-//        dd($bowls);
+        //        dd($bowls);
         return view($slug, ['title' => $slug, 'bowls' => $bowls])->render();
     }
 
@@ -65,11 +65,10 @@ Route::get('/{slug}', function ($slug) {
         foreach ($items as $item) {
             Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
         }
-
         $cart_items = Cart::content();
-//        dd(Cart::content());
-//        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
-//        dd($bowls);
+        //    dd(Cart::content());
+        //        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
+        //    dd($bowls);
         return view($slug, ['title' => $slug, 'cart_items' => $cart_items])->render();
     }
 

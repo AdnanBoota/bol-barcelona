@@ -27,24 +27,23 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($records as $record)
-                <tr>
-                    <td>{{$record->name}}</td>
-                    <td>{{$record->price}}</td>
-                    <td>{{specsList($record->specs)}}</td>
-                    <td>{{$record->created_at}}</td>
-                    <td>{{$record->updated_at->diffForHumans()}}</td>
-                    <td><a href="{{route('ingredients.edit',$record->id)}}" style="margin-top: 5px;"
-                           class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"
-                                                                aria-hidden="true"></span></a></td>
-                    <td>
+                @foreach($records as $record)
+                    <tr>
+                        <td>{{$record->name}}</td>
+                        <td>{{$record->price}}</td>
+                        <td>{{specsList($record->specs)}}</td>
+                        <td>{{$record->created_at}}</td>
+                        <td>{{$record->updated_at->diffForHumans()}}</td>
+                        <td><a href="{{route('ingredients.edit',$record->id)}}" style="margin-top: 5px;"
+                            class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"aria-hidden="true"></span></a></td>
+                        <td>
 
                         {{ Form::open([ 'method'  => 'delete', 'route' => [ 'ingredients.destroy', $record->id ] ])}}
                         {{ Form::button('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', ['type' => 'submit','class' => 'btn btn-sm btn-danger']) }}
                         {{ Form::close() }}
                     </td>
-                </tr>
-            @endforeach
+                    </tr>
+                 @endforeach
             </tbody>
             <tfoot>
             <tr>

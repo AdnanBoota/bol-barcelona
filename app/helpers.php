@@ -9,6 +9,7 @@
 
 function typesList($key = null)
 {
+  
     $typeList = [
         '' => 'Select Value',
         'brunch-bols' => 'Brunch Bols',
@@ -17,7 +18,7 @@ function typesList($key = null)
         'quinoa-bols' => 'Quinoa Bols',
         'signature-bols' => 'Signature Bols',
     ];
-
+//   dd($key);
     if ($key != null) return $typeList[$key];
     return $typeList;
 }
@@ -59,11 +60,14 @@ function specsList($key = null)
 
         $specString = '';
         $key = json_decode($key);
-        foreach ($key as $index) {
-            $specString .= $specList[$index] . ', ';
+        // dd($key);
+        if($key != null){
+            foreach ($key as $index) {
+            $specString .= $specList[$index] . ',';
+         }
         }
-
-//        dd($specString);
+    
+        //dd($specString);
         $specString = rtrim(trim($specString), ',');
         return $specString;
     }

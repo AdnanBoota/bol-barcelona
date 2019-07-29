@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\CustomIngredients;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call(IngredientsTableSeeder::class);
+        $this->call(BowlsTableSeeder::class);
+        $this->call(CustomIngredientTableSeeder::class);
+
     }
 }

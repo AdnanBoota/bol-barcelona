@@ -30,7 +30,7 @@ class IngredientsController extends Controller
     {
         $data = Array();
         $data['specsValues'] = specsList();
-//        dd($data);
+    //    dd($data);
         return view('admin/ingredients/create-ingredient', $data);
     }
 

@@ -1,7 +1,7 @@
 @extends('master')
 @section('style')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+     <style>
         {{--body {--}}
             {{--background-image: url("{{ asset('/images/order-online.jpg')}}");--}}
             {{--/*background-position: center;*/--}}
@@ -245,6 +245,7 @@
                     <li><a class="toggle_nav_icons">+ INFO</a></li>
                 </ul>
             </div>
+            <div class="col-sm-4">
             <div class="bucket_cart_parent">
                 <div style="padding-left: 10px;padding-right: 10px;">
                     <a class="bucket_cart_link_toggle" style="cursor: pointer;text-decoration: none;color:white;">
@@ -266,6 +267,8 @@
                     <a class="btn btn-primary final_checkout">CHECK OUT</a>
                 </div>
             </div>
+            </div>
+            
             {{--<div class="clearfix"></div>--}}
 
 
@@ -280,6 +283,7 @@
                         <span>{{typesList($key)}}</span>
                         <p>MANY DISHES CAN BE MADE VEGAN, GLUTEN-FREE AND LACTOSE FREE</p>
                     </div>
+                    </div>
                     @foreach($bowl_group as $bowl)
                         <div class="col-sm-offset-1 col-sm-3 card_product" data-bowl="{{json_encode($bowl)}}"
                              data-val="{{json_encode($bowl->ingredients)}}" data-price="{{$bowl->price}}">
@@ -287,7 +291,7 @@
                                  src="https://via.placeholder.com/300x225"/>
                             <h3>{{$bowl->name}}</h3>
                             <p>{{$bowl->description}}</p>
-                            <a href="#">+ ADD TO CART</a>
+                            <a href="#{{$key}}" class="popup_open">+ ADD TO CART</a>
                             <span class="item_price">€ {{$bowl->price}}</span>
                         </div>
                     @endforeach
@@ -345,7 +349,7 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         $(".popup_open").click(function () {
-//            alert('coming here');
+        //    alert('coming here');
             var bowl_info = $(this).parent().data('bowl');
             console.log($(this).parent().data('bowl'));
             current_bowl = bowl_info.name;
@@ -359,6 +363,7 @@
             };
             cart_details[current_bowl] = my_bowl;
             var items = $(this).parent().data('val');
+            console.log(items);
             bowl_price = $(this).parent().data('price');
             current_total = 0;
             var items_html = '';
@@ -455,7 +460,6 @@
 
         $(document).on('click', 'a[href^="#"]', function (event) {
             event.preventDefault();
-
             $('html, body').animate({
                 scrollTop: $($.attr(this, 'href')).offset().top
             }, 800);

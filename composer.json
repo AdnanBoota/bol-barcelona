@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "gloudemans/shoppingcart": "^2.5",
         "hochstrasserio/wirecard": "^1.1",
+        "illuminate/html": "^5.0",
         "jeroennoten/laravel-adminlte": "^1.24",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
@@ -45,7 +46,8 @@
             "database/factories"
         ],
         "files": [
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/redsys/apiredsys.php"
         ]
     },
     "autoload-dev": {
