@@ -478,10 +478,12 @@ border: black;
 
 @section('script')
 <script>
-    var base_url = '{!! url(' / ') !!}';
+    var base_url = '{!! url('/') !!}';
+    console.log(base_url);
     var prod_count;
     var total_custom_bowl_price;
     var selected_pro_count = '';
+    var final_items = [];
     var current_custom_bowl = 'My_Bowl';
     var cart_details = {};
     $('.top_cart_add_button').click(function() {
@@ -523,6 +525,7 @@ border: black;
         var free_quantity = single_item.attr('data-free-qty');
         var free_quantity_price = single_item.attr('data-qty-price');
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
+        final_items.push(single_item.find('.prod_name').text());
         $('.minus_item[data-value=' + id + ']').removeClass('hidden ');
         var count_item = single_item.attr('prod_count');
         single_item.attr('prod_count', ++count_item);
@@ -552,11 +555,13 @@ border: black;
             $('.single_prod_add[data-value=' + id + ']').attr('prod_count', 0);
             $('.minus_item[data-value=' + id + ']').parent().removeClass('single_prod_btns_selected');
             $('.tabs_div_content[data-value=' + id + ']').removeClass('single_prod_selected');
+            // final_items.empty();
         } else {
             var single_item = $('.single_prod_add[data-value=' + id + ']').attr('prod_count', --current_prod_count);
             var free_quantity = single_item.attr('data-free-qty');
             var free_quantity_price = single_item.attr('data-qty-price');
             var cart_total_price = $('.total_cutom_bowl_price').attr('value');
+            // final_items.remove(single_item.find('.prod_name').text());
             // console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
             var count_item_value = '<span class="cart_selected_count' + id + '">' + single_item.attr('prod_count') + '</span>'
             $('.cart_selected_count' + id).remove();
@@ -594,14 +599,16 @@ border: black;
     $('.final_checkout').click(function() {
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
         var custom_bowl = {
+            id:1,
             name: current_custom_bowl,
             price: cart_total_price,
             total: cart_total_price,
+            // items:final_items,
             text: ''
         };
+        // console.log(final_items);
         cart_details[current_custom_bowl] = custom_bowl;
-
-        document.location.href = base_url + "/checkout";
+        document.location.href = base_url + "/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
     });
 </script>
 @endsection

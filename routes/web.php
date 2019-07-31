@@ -56,26 +56,25 @@ Route::get('/{slug}', function ($slug) {
         //        dd($bowls);
         return view($slug, ['title' => $slug, 'bowls' => $bowls])->render();
     }
+    if ($slug == 'custom-bowl') {
+        $ingreds = \App\CustomIngredients::get()->groupBy('category');
+        return view($slug, ['title' => $slug, 'ingreds' => $ingreds])->render();
+    }
 
     if ($slug == 'checkout') {
         $items = Request::input('items');
         $items = json_decode($items);
-
         Cart::destroy();
         foreach ($items as $item) {
             Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
         }
         $cart_items = Cart::content();
-        //    dd(Cart::content());
+        // dd(Cart::content());
         //        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
         //    dd($bowls);
         return view($slug, ['title' => $slug, 'cart_items' => $cart_items])->render();
     }
 
-    if ($slug == 'custom-bowl') {
-        $ingreds = \App\CustomIngredients::get()->groupBy('category');
-        return view($slug, ['title' => $slug, 'ingreds' => $ingreds])->render();
-    }
 
     if (view()->exists($slug)) {
         return view($slug, ['title' => $slug])->render();
