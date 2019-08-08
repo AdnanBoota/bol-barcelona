@@ -18,18 +18,25 @@ class RedsysController extends Controller
 
         //  return view('/redsys')->with('post','$amount');
         try {
+            $pickupTime = $_POST['pick_time'];
+            $Username = $_POST['first_name'];
+            $email = $_POST['e_mail'];
+            $phone = $_POST['phone'];
+            // dd($pickupTime);
+            // $key = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
             $key = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
 
             Redsys::setAmount($_POST['amount']);
             Redsys::setOrder(time());
-            Redsys::setMerchantcode('348605437'); //Reemplazar por el código que proporciona el banco
+            // Redsys::setMerchantcode('348605437'); //Reemplazar por el código que proporciona el banco
+            Redsys::setMerchantcode('999008881'); //Reemplazar por el código que proporciona el banco
             Redsys::setCurrency('978');
             Redsys::setTransactiontype('0');
             Redsys::setTerminal('1');
             Redsys::setMethod('T'); //Solo pago con tarjeta, no mostramos iupay
-            Redsys::setNotification(config('http://localhost')); //Url de notificacion
-            Redsys::setUrlOk(config('http://localhost/ok.php')); //Url OK
-            Redsys::setUrlKo(config('http://localhost/ko.php')); //Url KO
+            Redsys::setNotification('http://localhost:8000/notify'); //Url de notificacion
+            Redsys::setUrlOk('http://localhost:8000/tpv_ok/'.$Username.'/'.$email.'/'.$phone.'/'.$pickupTime); //Url OK
+            Redsys::setUrlKo('http://localhost:8000/tpv_ko'); //Url KO
             Redsys::setVersion('HMAC_SHA256_V1');
             Redsys::setTradeName('Bol Barcelona');
             Redsys::setTitular('Sylvain Cazali');
@@ -40,6 +47,9 @@ class RedsysController extends Controller
 
             $signature = Redsys::generateMerchantSignature($key);
             Redsys::setMerchantSignature($signature);
+            Redsys::setNameForm('bol_barcelona_payment');
+            Redsys::setIdForm('bol_barcelona_payment');
+            Redsys::getParameters('bol_barcelona_payment');
             $form = Redsys::executeRedirection();
         } catch (Exception $e) {
             echo $e->getMessage();

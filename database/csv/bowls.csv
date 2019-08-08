@@ -1,0 +1,18 @@
+id,name,type,price,specs,description
+1,Japanese Girl bol,signature-bols,10.95,"[""v"",""ve"",""gf"",""fs""]",bol
+2,Pretty thai bol,signature-bols,10.95,"[""v"",""fs"",""s"",""se"",""so"",""c"",""gl""]",bol
+3,Amazing poke bol,signature-bols,11.95,"[""se"",""so"",""h"",""gl""]",bol
+4,Super california bol,quinoa-bols,9.95,"[""v"",""ve"",""gf"",""fs""]",bol
+5,Greek goodness böl,quinoa-bols,9.95,"[""v"",""gf"",""fs"",""l""]",bol
+6,Azteca böl,quinoa-bols,9.95,"[""v"",""gf"",""s""]",bol
+7,Coco Mermaid bol,smoothie-bols,8.5,"[""v"",""ve"",""sf"",""fs""]",bol
+8,Cosmic Blue bol,smoothie-bols,8.5,"[""v"",""ve"",""sf"",""fs""]",bol
+9,Pink pitaya bol,smoothie-bols,8.5,"[""v"",""sf"",""fs""]",bol
+10,Açai berry bol	,smoothie-bols,8.5,"[""v"",""sf"",""fs""]",bol
+11,Eggs Benedict Waffle	,brunch-bols,0,"[""v"",""fs"",""l"",""h""]",bol
+12,Italian Toast bol	,brunch-bols,7.95,"[""v"",""fs"",""l""]",bol
+13,Avocado Toast bol	,brunch-bols,8.5,"[""v"",""fs"",""h""]",bol
+14,Mamma french toast	,brunch-bols,8.5,"[""v"",""fs""]",bol
+15,Berry vegan pancakes	,brunch-bols,8.5,"[""v"",""fs""]",bol
+16,Greek parfait bol	,brunch-bols,7.5,"[""v"",""fs"",""l""]",bol
+17,Protein punch bol	,brunch-bols,7.5,"[""v"",""fs"",""sf""]",bol

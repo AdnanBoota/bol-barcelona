@@ -17,7 +17,7 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Price</th>
+                <th>Total Price</th>
                 <th>Extra.</th>
                 <th>Created At</th>
                 <th>Updated At</th>

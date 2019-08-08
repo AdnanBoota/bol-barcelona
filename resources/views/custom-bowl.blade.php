@@ -255,23 +255,40 @@ text-align: center;
 margin: 15px;
 cursor: pointer;
 }
-
+.tabs_div_content:hover{
+border:2px solid #8E1069;
+}
 .single_prod_btns {
-height: 54px;
+height: 52px;
 position: relative;
 padding: 3px 10px 5px 10px;
-top: 0px;
 overflow: hidden;
+margin: 1px;
 }
 .single_prod_btns>*{
 border-radius: 20px;
 }
+.single_prod_btns :focus ,.single_prod_btns :active{
+outline:none !important;
+}
 .single_prod_btns_selected{
 background: #f3e5f8;
+z-index: 2;
 }
-
+.single_prod_price{
+background: #090909;
+top: 13px;
+position: absolute;
+right: 10px;
+color: white;
+font-size: 15px;
+z-index: -1;
+width: 64px;
+padding: 4px 2px 5px 23px;
+}
 .single_prod_selected {
 border: 2px solid #8E1069;
+z-index: 1;
 }
 
 .tabs_div_content img {
@@ -379,12 +396,20 @@ margin-top: 5px;
 background-color: black;
 border: black;
 }
+.items_check{
+margin-left:20px;
+}
+.alert.warning {
+background-color: #bc9ab2;
+position: absolute;
+right: 0px;
+color: white;}
 </style>
 @endsection
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-6" style="text-align: right">
+        <div class="col-sm-12" style="text-align: center">
             <h1 style="text-decoration:underline;font-weight: bold ">YOUR OWN BOWL</h1>
         </div>
     </div>
@@ -392,9 +417,12 @@ border: black;
     <hr>
 
     <ul class="nav nav-tabs custom_menu_tabs" data-spy="affix" data-offset-top="150">
+        @php($counter=0)
         @foreach($ingreds as $key => $ingred)
-        <li class="{{$loop->first==1 ? 'active':''}}"><a style="text-transform: uppercase" data-toggle="tab" href="#{{$key}}">1. {{customIngredientCategory($key)}}
-                <span> {{$loop->first}}WAHLE 5</span></a>
+        @php($counter=$counter+1)
+        <li class="{{$loop->first==1 ? 'active':''}}"><a style="text-transform: uppercase" data-toggle="tab" href="#{{$key}}">{{$counter}} {{customIngredientCategory($key)}}
+            </a>
+            <!-- <span> {{$loop->first}}WAHLE 5</span> -->
         </li>
         @endforeach
     </ul>
@@ -415,8 +443,8 @@ border: black;
                     <span class="prod_name">{{$record->name}}</span>
                 </div>
                 <div data-value="{{$record->id}}" class="single_prod_btns">
-                    <button style="float: right;display: block;margin-top:10px;" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" class="single_prod_add btn btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
+                    <button style="float: right;display: block;margin-top:10px;" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" class="single_prod_add add_item btn btn-sm">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button><span data-value="{{$record->id}}" class="single_prod_price hidden"> {{$record->price}}</span>
                     <button style="float: left;display: block;margin-top:10px;" data-value="{{$record->id}}" class=" btn btn-sm minus_item hidden"><span class="glyphicon glyphicon-minus" aria-hidden="false"></span>
                     </button>
                 </div>
@@ -429,9 +457,12 @@ border: black;
         @endforeach
         <div class="col-sm-3" style="position: fixed;right: 0px;">
 
-            <div data-spy="cart_set" data-offset-top="150" class="" style="font-size:14px;padding:0px;float:left;background-color:  lightgrey;width:100%">
-                <div style="padding: 10px;">
+            <div data-spy="cart_set" data-offset-top="150" class="" style="font-size:14px;padding:0px;float:left;background-color:lightgrey;width:100%;width:98%;margin: 15px 4px 4px 4px;">
+                <div style="padding: 20px;">
                     <h4>YOUR DISH CONTAINS:</h4>
+                    <span class='no_component'>
+                        <h5><i>No components picked</i></h5>
+                    </span>
                     <ul class="cart_item_list"></ul>
                 </div>
                 <div style="background-color: #8E1069;color:white;padding: 5px;text-align: center">TOTAL DISH:
@@ -484,41 +515,55 @@ border: black;
     var total_custom_bowl_price;
     var selected_pro_count = '';
     var final_items = [];
-    var current_custom_bowl = 'My_Bowl';
+    var current_custom_bowl = 'My Custom Bowl';
     var cart_details = {};
     $('.top_cart_add_button').click(function() {
 
-        var category, count_obj = {};
+        var category, categories = {};
+        var items_per_category = [];
+        var count = 0;
         $('.cart_item_list li[data-category]').each(function(i, el) {
+
             category = $(el).data('category');
-            if (count_obj.hasOwnProperty(category)) {
-                count_obj[category] += 1;
+            console.log($(el));
+            if (categories.hasOwnProperty(category)) {
+                var items_per_category = [];
+                categories[category] += '<span class="items_check">-' + $(el).text() + '<br></span>';
+
             } else {
-                count_obj[category] = 1;
+                categories[category] = '<span class="items_check">-' + $(el).text() + '<br></span>';
+
             }
         });
 
-        $('.summary_ul').html('');
+        console.log(categories);
+        console.log(items_per_category);
+        if ($.isEmptyObject(categories)) {
+            toastr.error('No Item has been selected!');
+        } else {
+            console.log(items_per_category);
+            $('.summary_ul').html('');
 
-        for (var key in count_obj) {
-            $('.summary_ul').append('<li>' + key + ' : ' + count_obj[key] + '</li>');
+            for (var key in categories) {
+                $('.summary_ul').append('<li><span style="font-size:14px">' + key + ' : </span><br>' + categories[key] + '</li>');
+            }
+
+            $('#myModal').modal('show');
         }
 
-        $('#myModal').modal('show');
     });
 
     $(".single_prod_add").on("click", function() {
-        $(this).parent().addClass()
         prod_add($(this).data('value'));
-
-
     });
 
     $('.minus_item').on('click', function() {
         prod_minus($(this).data('value'));
     });
 
+
     function prod_add(id) {
+        $('.no_component').addClass('hidden');
         $('.single_prod_btns[data-value=' + id + ']').addClass('single_prod_btns_selected');
         $('.tabs_div_content[data-value=' + id + ']').addClass('single_prod_selected');
         var single_item = $('.single_prod_add[data-value=' + id + ']');
@@ -526,28 +571,36 @@ border: black;
         var free_quantity_price = single_item.attr('data-qty-price');
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
         final_items.push(single_item.find('.prod_name').text());
-        $('.minus_item[data-value=' + id + ']').removeClass('hidden ');
+        $('.minus_item[data-value=' + id + ']').removeClass('hidden');
         var count_item = single_item.attr('prod_count');
         single_item.attr('prod_count', ++count_item);
-        var count_item_value = '<span class="cart_selected_count' + id + '">' + single_item.attr('prod_count') + '</span>'
+        var count_item_value = '<span class="cart_selected_count' + id + '" style="vertical-align: sub;font-size: 18px;font-weight: bold;color: #8e1069;">' + single_item.attr('prod_count') + 'X</span>'
         $('.cart_selected_count' + id).remove();
         $('.single_prod_btns[data-value=' + id + ']').append(count_item_value);
         if (count_item == 1) {
             var li_html = '<li data-free-qty="' + single_item.data('free-qty') + '" data-qty-price="' + single_item.data('qty-price') + '" data-category="' + single_item.data('category') +
-                '" data-value="' + single_item.data('value') + '" class="cart_item_selected">' + single_item.find('.prod_name').text() + '<span class="cart_div_count' + id + '" style="float:right">' + single_item.attr('prod_count') + '</span><a href="#" class="remove_selected_prod cross_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>';
+                '" data-value="' + single_item.data('value') + '" class="cart_item_selected">' + single_item.find('.prod_name').text() + '<span class="cart_div_count' + id + '" style="float:left; padding-right:7px">' + single_item.attr('prod_count') + 'X</span><a href="#" class="remove_selected_prod cross_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>';
             $('.cart_item_list').append(li_html);
         } else {
-            $('.cart_div_count' + id).text(single_item.attr('prod_count'));
+            $('.cart_div_count' + id).text(single_item.attr('prod_count') + 'X');
         }
         if (count_item > free_quantity) {
             total_custom_bowl_price = parseFloat(cart_total_price) + parseFloat(free_quantity_price);
             $('.total_cutom_bowl_price').attr('value', total_custom_bowl_price);
             $('.total_cutom_bowl_price').html(total_custom_bowl_price.toFixed(2) + ' €');
         }
+        if (count_item == free_quantity) {
+            $('.single_prod_price[data-value=' + id + ']').removeClass('hidden');
+            $('.add_item[data-value=' + id + ']').css('margin-right', '39px');
+        }
     };
 
     function prod_minus(id) {
+        console.log($('.cart_item_list').length);
+
         var current_prod_count = $('.single_prod_add[data-value=' + id + ']').attr('prod_count');
+        // console.log(current_prod_count);
+
         if (current_prod_count == 1) {
             $('.minus_item[data-value=' + id + ']').addClass('hidden');
             $('.cart_selected_count' + id).remove();
@@ -563,14 +616,19 @@ border: black;
             var cart_total_price = $('.total_cutom_bowl_price').attr('value');
             // final_items.remove(single_item.find('.prod_name').text());
             // console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
-            var count_item_value = '<span class="cart_selected_count' + id + '">' + single_item.attr('prod_count') + '</span>'
+            var count_item_value = '<span class="cart_selected_count' + id + '"style="vertical-align: sub;font-size: 18px;font-weight: bold;color: #8e1069;">' + single_item.attr('prod_count') + 'X</span>'
             $('.cart_selected_count' + id).remove();
-            $('.single_prod_btns[data-value=' + id + ']').append(count_item_value);
+            $('.single_prod_btns[data-value= ' + id + ']').append(count_item_value);
             $('.cart_item_selected[data-value=' + id + ']').children('.cart_div_count' + id).text(single_item.attr('prod_count'));
             if (++current_prod_count > free_quantity) {
                 total_custom_bowl_price = parseFloat(cart_total_price) - parseFloat(free_quantity_price);
                 $('.total_cutom_bowl_price').attr('value', total_custom_bowl_price);
                 $('.total_cutom_bowl_price').html(total_custom_bowl_price.toFixed(2) + ' €');
+            }
+            if (current_prod_count <= free_quantity) {
+                // console.log('comin');
+                $('.single_prod_price[data-value=' + id + ']').addClass('hidden');
+                $('.add_item[data-value=' + id + ']').css('margin-right', '0px');
             }
         }
     }
@@ -598,11 +656,13 @@ border: black;
 
     $('.final_checkout').click(function() {
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
+        var pickup_time = $('.total_cutom_bowl_price').attr('value');
         var custom_bowl = {
-            id:1,
+            id: 1,
             name: current_custom_bowl,
             price: cart_total_price,
             total: cart_total_price,
+            pickup_time:'',
             // items:final_items,
             text: ''
         };

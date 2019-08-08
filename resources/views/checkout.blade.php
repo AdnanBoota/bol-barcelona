@@ -254,8 +254,48 @@ font-size: 12px;
 border-radius: 0px;
 border: 1px solid black;
 }
+.voucher_success{
+position: relative;
+float: right;
+width: 654px;
+z-index: 3;
+height: 41px;
+padding: 9px;
+font-size: 18px;
+color: white;
+background: #8E1069;
+top: 5px;
+}
+.minutes_selected{
+background:pink;
+}
+.pickup_time{
+margin-left:20px;
+border-radius:50%;
+}
+.pickup_time.active{
+color: #111;
+background-color: #ffffff;
+border-color: #b6b6b6;
+}
+.pickup_time.active:hover{
+color: #111;
+background-color: #ffffff;
+border-color: #b6b6b6;
+}
+.pickup_time:hover,.pickup_time.focus{
+color: #111;
+background-color: #ffffff;
+border-color: #b6b6b6;
+}
+.pickup_min{
+margin-left: 13px;
+margin-right: 15px;
+}
+
 </style>
 @endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -278,84 +318,133 @@ border: 1px solid black;
     </div>
     <hr>
 
-    <div class="col-sm-7 col-sm-offset-5" style="padding: 0px;">
-        <form action="/redsys_payment" method="post">
-            <div class="input-group voucher_div">
+
+    <div class="col-sm-7 col-sm-offset-5 voucher_div" style="padding: 0px;">
+        <form action="/voucher_validation" method="post">
+            {{ csrf_field() }}
+            <div class="input-group">
                 <span class="input-group-addon">Voucher Code:</span>
-                <input type="text" class="form-control" placeholder="Enter your code here for validation">
+                <input type="text" name="voucher_code" class="form-control voucher_input" placeholder="Enter your code here for validation">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">SUBMIT</button>
+                    <button class="btn btn-default" name="submit_voucher" type="submit">SUBMIT</button>
                 </span>
             </div>
+        </form>
     </div>
-    <div class="clearfix"></div>
+    @if(session()->has('success'))
+    @section('script')
+    <script>
+        var total_final = $('.total_cart_price').text();
+        var voucher_final = $('.voucher_minus').text();
+        $('.total_cart_price').text('Your Final Payment: ' + total_final);
+        $('.voucher_success').append('Coupen of ' + voucher_final + '€  has been applied Successfully!');
+        toastr.success('Voucher verified Successfully!');
+    </script>
+    @endsection
+    <div class="col-sm-7 col-sm-offset-5 voucher_success" role="alert">
+        <span class="voucher_minus hidden">{{ session()->get('success') }}</span>
+    </div>
+    @endif
+    @if(session()->has('error'))
+    @section('script')
+    <script>
+        toastr.error('Invalid Coupen or Coupen has been Expired!');
+        $('.voucher_input').focus();
+    </script>
+    @endsection
+    @endif
+
+    <!-- <div class="clearfix"></div> -->
 
     <div class="col-sm-12 summary_total">
         <div class="col-sm-4">TOTAL:</div>
         <div class="col-sm-4" style="text-align: center">{{\Gloudemans\Shoppingcart\Facades\Cart::count()}} ARTICLE</div>
-        <div class="col-sm-4" style="text-align: right">€ {{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</div>
+        <div class="col-sm-4 total_cart_price" value={{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}} style="text-align: right">€ {{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</div>
     </div>
     <div class="clearfix"></div>
+    <form action="/redsys_payment" method="post">
+        <div class="col-sm-12 content_blocks">
+            <div style="padding-left: 0px; text-align: center; overflow:hidden;" class="col-sm-4">
+                <div class="blocks_main_content" style="padding-top:20px">
+                    <span style="text-decoration: underline">PICK-UP ADDRESS</span><br><br><br>
+                    <span><b>STORE:</b> Bol Barcelona</span><br><br>
+                    <span style="text-decoration: underline">PICK-UP TIME</span><br>
+                    <span style="font-size: 12px">Get your final pick-up time after payment succeeded</span><br>
 
-    <div class="col-sm-12 content_blocks">
-        <div style="padding-left: 0px; text-align: center" class="col-sm-4">
-            <div class="blocks_main_content" style="padding-top:20px">
-                <span style="text-decoration: underline">PICK-UP ADDRESS</span><br><br><br>
-                <span><b>STORE:</b> Bol Barcelona</span><br><br>
-                <span style="text-decoration: underline">PICK-UP TIME</span><br>
-                <span style="font-size: 12px">Get your final pick-up time after payment succeeded</span><br>
-
-                <div class="minutes_block"><span class="btn minutes_selector" data-val="5">5</span> MIN.</div>
-                <div class="minutes_block"><span class="btn minutes_selector" data-val="10">10</span> MIN.</div>
-                <div class="minutes_block"><span class="btn minutes_selector" data-val="15">15</span> MIN.</div>
-                <div class="minutes_block"><span class="btn minutes_selector" data-val="30">30</span> MIN.</div>
+                    <div class="minutes_block">
+                        <div data-toggle="buttons" style="margin-right:15px;margin-bottom: 0px;padding-bottom: 0px;;">
+                            <label class="btn pickup_time">
+                                <input type="radio" name="pick_time" class="btn minutes_selector" value="5" class="sr-only" required>05
+                            </label>
+                            <label class="btn  pickup_time">
+                                <input type="radio" name="pick_time" class="btn minutes_selector" value="10" class="sr-only" required>10
+                            </label>
+                            <label class="btn  pickup_time">
+                                <input type="radio" name="pick_time" class="btn minutes_selector" value="15" class="sr-only" required>15
+                            </label>
+                            <label class="btn  pickup_time">
+                                <input type="radio" name="pick_time" class="btn minutes_selector" value="30" class="sr-only" required>30
+                            </label>
+                        </div>
+                        <div data-toggle="buttons" style="margin-left:9px;margin-top: 0px;padding-top: 0px;">
+                            <span class="pickup_min">MIN.</span>
+                            <span class="pickup_min">MIN.</span>
+                            <span class="pickup_min">MIN.</span>
+                            <span class="pickup_min">MIN.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="input-group bootstrap-timepicker timepicker">
+                    <input data-provide="timepicker" id="timepicker1" type="text" class="form-control input-small">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div> -->
             </div>
-        </div>
-        <div class="col-sm-4 ">
-            <div class="blocks_main_content" style=" text-align: center;padding-top:20px">
-                <span style="text-decoration: underline">CONTACT-DETAILS</span><br><br><br>
-                <div class="row contact_form_elements">
-                    <div class="form-group" style="text-align: left">
-                        <span>FIRST NAME</span>
-                        <input required type="text" class="form-control" id="first_name">
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <span>LAST NAME</span>
-                        <input required type="text" class="form-control" id="last_name">
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <span>TELEPHONE</span>
-                        <input required type="text" class="form-control" id="telephone">
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <span>E-MAIL</span>
-                        <input required type="email" class="form-control" id="email">
+
+            <div class="col-sm-4 ">
+                <div class="blocks_main_content" style=" text-align: center;padding-top:20px">
+                    <span style="text-decoration: underline">CONTACT-DETAILS</span><br><br><br>
+                    <div class="row contact_form_elements">
+                        <div class="form-group" style="text-align: left">
+                            <span>FIRST NAME</span>
+                            <input required type="text" name="first_name" class="form-control" id="first_name">
+                        </div>
+                        <div class="form-group" style="text-align: left">
+                            <span>LAST NAME</span>
+                            <input required type="text" class="form-control" id="last_name">
+                        </div>
+                        <div class="form-group" style="text-align: left">
+                            <span>TELEPHONE</span>
+                            <input required type="text" name="phone" class="form-control" id="telephone">
+                        </div>
+                        <div class="form-group" style="text-align: left">
+                            <span>E-MAIL</span>
+                            <input required name="e_mail" type="email" class="form-control" id="email">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div style="padding-right: 0px;" class="col-sm-4">
-            <div class="blocks_main_content" style="padding-top:20px;text-align: center">
-                <span style="text-decoration: underline">PAYMENT</span><br><br><br>
-                <hr>
-                <div style="text-align: left">WIREDCARD</div>
-                <hr>
+            <div style="padding-right: 0px;" class="col-sm-4">
+                <div class="blocks_main_content" style="padding-top:20px;text-align: center">
+                    <span style="text-decoration: underline">PAYMENT</span><br><br><br>
+                    <hr>
+                    <div style="text-align: left">WIREDCARD</div>
+                    <hr>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
-        <ul class="footer_text">
-            <li><input type="checkbox"> I accept the terms and
-                conditions and privacy policy
-            </li>
-            <li><input type="checkbox"> I would like to receive the newsletter and be informed about news.</li>
-        </ul>
-        {{ csrf_field() }}
-        <input type="hidden" class="form-control" id="amount" name="amount" value={{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}>
-        <input type="submit" style="float: right; width:120px" class="btn btm-sm btn-primary btn-block" value="BUY NOW" name="submitPayment">
-        </form>
-        <!-- <button class="btn btm-sm" style="float: right">BUY NOW</button> -->
-    </div>
+        <div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+            <ul class="footer_text">
+                <li><input type="checkbox"> I accept the terms and
+                    conditions and privacy policy
+                </li>
+                <li><input type="checkbox"> I would like to receive the newsletter and be informed about news.</li>
+            </ul>
+            {{ csrf_field() }}
+            <input type="hidden" class="form-control" id="amount" name="amount" value={{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}>
+            <input type="submit" style="float: right; width:120px" class="btn btm-sm btn-primary btn-block" value="BUY NOW" name="submitPayment">
+    </form>
+    <!-- <button class="btn btm-sm" style="float: right">BUY NOW</button> -->
+</div>
 
 </div>
 
@@ -363,8 +452,7 @@ border: 1px solid black;
 @section('script')
 <script>
     var bowl_price, current_total;
-    var assets_url = '{!! asset('
-    images / ') !!}';
+    var assets_url = '{!! asset('images / ') !!}';
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -383,7 +471,13 @@ border: 1px solid black;
         $('.modal_price').html($(this).parent().find('.item_price').html());
         $('#myModal').modal('show');
     });
-
+    $(".minutes_selector").on('click', function(event) {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        $('.button').not(this).removeClass('buttonactive'); // remove buttonactive from the others
+        $(this).toggleClass('buttonactive'); // toggle current clicked element
+        console.log('i am clicked');
+    });
     $(document).on('click', '.single_item_ingred', function(event) {
         //            alert('coming here');
         var current_item_price = $(this).data('val');

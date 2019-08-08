@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Vouchers;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class VouchersController extends Controller
 {
@@ -14,11 +15,28 @@ class VouchersController extends Controller
      */
     public function index()
     {
-        $data = Array();
-//        dd(typesList());
-        $data['records'] = Vouchers::all();
-//        dd($bowls);
-        return view('admin/vouchers/vouchers', $data);
+        $data = array();
+        if (isset($_POST['submit_voucher'])) {
+            $voucher_code = $_POST['voucher_code'];
+            if (empty($voucher_code)) {
+                return back()->withInput();
+            } else {
+                $dt = Carbon::now();
+                $voucher = Vouchers::where('name', $voucher_code)->first();
+                if(!is_object($voucher)){
+                    return redirect()->back()->with('error', 'Invalid Voucher!');
+                }
+                else{
+                    
+                    // Cart::update
+                    return redirect()->back()->with('success', $voucher->value);
+                }
+            }
+        } else {
+            $data['records'] = Vouchers::all();
+            //        dd($bowls);
+            return view('admin/vouchers/vouchers', $data);
+        }
     }
 
     /**
@@ -28,8 +46,8 @@ class VouchersController extends Controller
      */
     public function create()
     {
-        $data = Array();
-//        dd($data);
+        $data = array();
+        //        dd($data);
         return view('admin/vouchers/create-voucher', $data);
     }
 
@@ -42,9 +60,9 @@ class VouchersController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-//        dd($data);
+        //        dd($data);
 
-//        $data['type']
+        //        $data['type']
         $bowl = Vouchers::create($data);
         return redirect('admin/vouchers');
     }
@@ -68,10 +86,10 @@ class VouchersController extends Controller
      */
     public function edit($id)
     {
-        $data = Array();
+        $data = array();
         $data['record'] = Vouchers::find($id);
-//        dd($data);
-//        dd($data['record']->ingredients->pluck('id'));
+        //        dd($data);
+        //        dd($data['record']->ingredients->pluck('id'));
         return view('admin/vouchers/create-voucher', $data);
     }
 

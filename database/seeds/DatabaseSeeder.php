@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(IngredientsTableSeeder::class);
         $this->call(BowlsTableSeeder::class);
         $this->call(CustomIngredientTableSeeder::class);
+        $this->call(VoucherCodeTableSeeder::class);
 
     }
 }

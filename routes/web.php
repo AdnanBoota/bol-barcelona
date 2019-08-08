@@ -12,6 +12,7 @@
 */
 
 use \Gloudemans\Shoppingcart\Facades\Cart;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 Route::get('/', function () {
     return view('home', ['title' => 'home']);
@@ -34,6 +35,9 @@ Route::prefix('admin')->group(function () {
     ]);
 });
 Route::post('/redsys_payment', 'RedsysController@index');
+Route::post('/voucher_validation', 'VouchersController@index');
+Route::get('/tpv_ok/{name}/{email}/{phone}/{pick_time}',['middleware'=> 'OrdersMiddleware', 'uses' => 'RedsysPaymentVerified@index']);
+Route::get('/notify', 'RedsysNotifyController@index');
 // Route::get('/redsys', ['as' => 'redsys', 'uses' => 'RedsysController@index']);
 //$2y$10$ECfrV7WW3Xk99/bzLx2Fku5cbLUpT3E3p4b/yPjqVgC95CQR/BCBC
 Route::get('/{slug}', function ($slug) {
@@ -64,14 +68,40 @@ Route::get('/{slug}', function ($slug) {
     if ($slug == 'checkout') {
         $items = Request::input('items');
         $items = json_decode($items);
-        Cart::destroy();
-        foreach ($items as $item) {
-            Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
+       
+
+        if (Session()->has('success')) {
+            // dd('returned');
+            $voucher_price = Session()->get('success');
+            // dd($voucher_price);
+            $final_payment = Cart::subtotal() - $voucher_price;
+            // dd(Cart::subtotal($final_payment));
+            Cart::destroy();
+            foreach ($items as $item) {
+                $item->total=$final_payment;
+                Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
+            }
         }
+        if (Session()->has('success_payment')) {
+            
+            // dd(Session()->get('success_payment'));
+            // dd(Cart::store('order'));
+            // Cart::instance('wishlist')->store('username');
+            // Cart::store('1');
+            // $order->cart = serialize($);
+            Cart::destroy();
+            return view('tpv_ok', array('title' => 'Bol'));
+            
+        }
+        else{
+            Cart::destroy();
+            foreach ($items as $item) {
+                // dd($item->id);
+                Cart::add($item->id, $item->name, 1, $item->total, ['text' => $item->text]);
+            }
+        }
+       
         $cart_items = Cart::content();
-        // dd(Cart::content());
-        //        $bowls = \App\Bowls::with('ingredients')->get()->groupBy('type');
-        //    dd($bowls);
         return view($slug, ['title' => $slug, 'cart_items' => $cart_items])->render();
     }
 

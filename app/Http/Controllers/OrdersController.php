@@ -15,7 +15,7 @@ class OrdersController extends Controller
     public function index()
     {
         $data = Array();
-//        dd(typesList());
+       dd(typesList());
         $data['records'] = Orders::all();
 //        dd($bowls);
         return view('admin/orders/orders', $data);

@@ -31,6 +31,8 @@ class CreateBowlsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('bowls');
+        Schema::enableForeignKeyConstraints();
     }
 }
