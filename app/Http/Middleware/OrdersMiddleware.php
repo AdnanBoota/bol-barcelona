@@ -37,6 +37,7 @@ class OrdersMiddleware
         $order->customer_phone = $request->route('phone');
         $order->pickup_time = $request->route('pick_time');
         $order->total = $subtotal;
+        $order->description = 'No Description';
         $order->save();
 
 
@@ -63,9 +64,10 @@ class OrdersMiddleware
             // dd($extra_ingredients);
             $detail_order->extras = $extra_ingredients;
             $detail_order->quantity = $quantities;
-            // dd($extra_ingredients);
+            // dd($item);
             $detail_order->name = $item->name;
             $detail_order->price = $item->price;
+            $detail_order->description = 'No Description';
             $order->orders_detail()->save($detail_order);
         
             
