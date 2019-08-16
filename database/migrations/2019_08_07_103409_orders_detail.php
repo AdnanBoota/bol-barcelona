@@ -23,7 +23,7 @@ class OrdersDetail extends Migration
             $table->string('quantity')->default('1');
             $table->string('extras')->default('No extra ingredients');
             $table->decimal('price', 8, 2);
-            $table->text('description')->default('No description');
+            $table->text('description');
             $table->timestamps();
 
         });
