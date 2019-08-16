@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Orders;
+use App\OrdersDetail;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -12,13 +13,15 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Array();
-       dd(typesList());
-        $data['records'] = Orders::all();
-//        dd($bowls);
-        return view('admin/orders/orders', $data);
+        $data = array();
+        $orders = array();
+        $orders['orders'] = Orders::get();
+        foreach ($orders['orders'] as $order) {
+            array_push($data, $order);
+        }
+        return view('admin/orders/orders')->with('data', $data);
     }
 
     /**
@@ -50,7 +53,21 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Array();
+        $orders_detail = Array();
+        $order_total = Array();
+        $order_total= Orders::where('id', $id)->get();
+    
+        // dd($order_total);
+        $orders_detail = OrdersDetail::where('order_id', $id)->get();
+        // dd($orders_detail);
+        foreach ($orders_detail as $order) {
+            array_push($data, $order);
+        }
+        
+        // $array = explode(' ', $string);
+        // dd($data);
+        return view('admin/orders/orders_detail')->with(['data'=> $data,'total'=>$order_total]);
     }
 
     /**
@@ -84,6 +101,7 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
+        // return view('admin/orders/orders')->with('data', $data);
         //
     }
 }

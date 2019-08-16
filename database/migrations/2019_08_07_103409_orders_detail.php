@@ -20,8 +20,9 @@ class OrdersDetail extends Migration
                 ->references('id')->on('orders')
                 ->onDelete('cascade');
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('price');
+            $table->string('quantity')->default('1');
+            $table->string('extras')->default('No extra ingredients');
+            $table->decimal('price', 8, 2);
             $table->text('description')->default('No description');
             $table->timestamps();
 

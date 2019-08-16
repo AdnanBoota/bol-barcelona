@@ -50,7 +50,7 @@ id,name,price,specs
 49,granada,1,"[""v"",""fs"",""gf"",""l""]"
 50,queso feta,3,"[""v"",""fs"",""gf"",""l""]"
 51,hummus,4,"[""v"",""fs"",""gf"",""l""]"
-52,"tzatsiki ( salsa de yogourt, pepino & menta)",5,"[""v"",""fs"",""gf"",""l""]"
+52,tzatsiki ( salsa de yogourt + pepino & menta),5,"[""v"",""fs"",""gf"",""l""]"
 53,remolacha,1,"[""v"",""ve"",""fs"",""gf""]"
 54,garbanzos,3,"[""v"",""ve"",""fs"",""gf""]"
 55,naranja,3,"[""v"",""ve"",""fs"",""gf""]"

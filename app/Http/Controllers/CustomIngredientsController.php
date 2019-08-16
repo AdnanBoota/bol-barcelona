@@ -17,7 +17,7 @@ class CustomIngredientsController extends Controller
         $data = Array();
 //        dd(typesList());
         $data['records'] = CustomIngredients::all();
-//        dd($data);
+    //    dd($data);
         return view('admin/custom-ingredients/custom-ingredients', $data);
     }
 
@@ -30,7 +30,7 @@ class CustomIngredientsController extends Controller
     {
         $data = Array();
         $data['ingredValues'] = customIngredientCategory();
-//        dd($data);
+    //    dd($data);
         return view('admin/custom-ingredients/create-custom-ingredient', $data);
     }
 

@@ -5,74 +5,84 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Orders</h1>
+<h1>Orders</h1>
 @stop
 
 @section('content')
-    <p>All the Orders</p>
+<p>All the Orders</p>
 
-    <div class="container">
+<div class="container">
 
-        <table class="data-table" class="display" style="width:100%;">
-            <thead>
+    <table class="data-table" class="display" style="width:100%;">
+        <thead>
             <tr>
-                <th>Name</th>
+                <th>Customer Name</th>
+                <th>Customer E-mail</th>
+                <th>Customer Phone</th>
+                <th>Pickup Time</th>
                 <th>Total Price</th>
-                <th>Extra.</th>
+                <!-- <th>Extra.</th> -->
                 <th>Created At</th>
                 <th>Updated At</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <td>Order Details</td>
+                <!-- <th>Edit</th> -->
+                <!-- <th>Delete</th> -->
             </tr>
-            </thead>
-            <tbody>
-            @foreach($records as $record)
-                <tr>
-                    <td>{{$record->name}}</td>
-                    <td>{{$record->price}}</td>
-                    <td>{{specsList($record->specs)}}</td>
-                    <td>{{$record->created_at}}</td>
-                    <td>{{$record->updated_at->diffForHumans()}}</td>
-                    <td><a href="{{route('ingredients.edit',$record->id)}}" style="margin-top: 5px;"
-                           class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"
-                                                                aria-hidden="true"></span></a></td>
-                    <td>
+        </thead>
+        <tbody>
+            @foreach($data as $order)
 
-                        {{ Form::open([ 'method'  => 'delete', 'route' => [ 'ingredients.destroy', $record->id ] ])}}
-                        {{ Form::button('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', ['type' => 'submit','class' => 'btn btn-sm btn-danger']) }}
-                        {{ Form::close() }}
-                    </td>
-                </tr>
+            <tr>
+                <td>{{$order->customer_name}}</td>
+                <td>{{$order->customer_email}}</td>
+                <td>{{$order->customer_phone}}</td>
+                <td>{{$order->pickup_time}} Mins</td>
+                <td>{{$order->total}}</td>
+                <td>{{$order->created_at}}</td>
+                <td>{{$order->updated_at->diffForHumans()}}</td>
+                <!-- <td>
+
+                    {{ Form::open([ 'method'  => 'show', 'route' => [ 'orders.destroy', $order->id ] ])}}
+                    {{ Form::button('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>', ['type' => 'submit','class' => 'btn btn-sm btn-info']) }}
+                    {{ Form::close() }}
+                </td> -->
+                <td><a href="{{route('orders.show',$order->id)}}" style="margin-top: 5px;" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                <td>
+            </tr>
             @endforeach
-            </tbody>
-            <tfoot>
+        </tbody>
+        <tfoot>
             <tr>
                 <th>Name</th>
-                <th>Price</th>
-                <th>Extra.</th>
+                <th>E-mail</th>
+                <th>Phone No#</th>
+                <th>PickUp Time</th>
+                <th>Total Price</th>
+                <!-- <th>Extra.</th> -->
                 <th>Created At</th>
                 <th>Updated At</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <td>Order Details</td>
+                <!-- <th>Edit</th> -->
+                <!-- <th>Delete</th> -->
             </tr>
-            </tfoot>
-        </table>
-    </div>
+        </tfoot>
+    </table>
+</div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
-    <script>
+<script>
+    $(document).ready(function() {
+        $('.data-table').dataTable({
+            "order": [
+                [3, "desc"]
+            ],
 
-        $(document).ready(function () {
-            $('.data-table').dataTable({
-                "order": [[3, "desc"]],
-
-            });
         });
-
-    </script>
+    });
+</script>
 @stop

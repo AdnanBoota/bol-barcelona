@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-    <p>Add a new Ingredient</p>
+    <p>Order Detail</p>
     <div class="container">
         <div class="row contact_form" style="margin-top:5%;">
             <div class="col-sm-8 col-sm-offset-2">

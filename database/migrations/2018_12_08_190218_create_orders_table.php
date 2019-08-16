@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
         //    $table->foreign('bowls_id')->references('id')->on('bowls');
             $table->string('customer_name');
             $table->string('customer_email');
-            $table->integer('customer_phone');
+            $table->string('customer_phone');
             $table->integer('pickup_time');
             // $table->string('bowl-type');
             $table->decimal('total', 8, 2);

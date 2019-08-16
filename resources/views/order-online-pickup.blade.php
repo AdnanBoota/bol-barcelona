@@ -433,7 +433,8 @@
                 $('.modal_price').html('€ ' + current_total.toFixed(2));
                 cart_details[current_bowl]['items'][current_item_id] = {
                     name: current_item_name,
-                    price: current_item_price
+                    price: current_item_price,
+                    quantity: '1'
                 };
             } else {
                 $(this).find('.add_remove').html('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>');

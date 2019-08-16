@@ -440,13 +440,21 @@ color: white;}
                 <div class="single_prod_add" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" data-category="{{$record->category}}">
                     <span style=" text-align: right;font-size:14px;color:grey;display: block">{{$record->description}}</span>
                     <img src="https://via.placeholder.com/125x125" />
-                    <span class="prod_name">{{$record->name}}</span>
+                    <span class="prod_name" data-value="{{$record->id}}">{{$record->name}}</span>
                 </div>
                 <div data-value="{{$record->id}}" class="single_prod_btns">
+                    @if($record->qty_free == 0)
+                    <button style="float: right;display: block;margin-top:10px;margin-right:39px" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" class="single_prod_add add_item btn btn-sm">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button><span data-value="{{$record->id}}" class="single_prod_price"> {{$record->price}}</span>
+
+                    @else
                     <button style="float: right;display: block;margin-top:10px;" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" class="single_prod_add add_item btn btn-sm">
+
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button><span data-value="{{$record->id}}" class="single_prod_price hidden"> {{$record->price}}</span>
+                    @endif
                     <button style="float: left;display: block;margin-top:10px;" data-value="{{$record->id}}" class=" btn btn-sm minus_item hidden"><span class="glyphicon glyphicon-minus" aria-hidden="false"></span>
                     </button>
+
                 </div>
 
             </div>
@@ -514,9 +522,18 @@ color: white;}
     var prod_count;
     var total_custom_bowl_price;
     var selected_pro_count = '';
-    var final_items = [];
     var current_custom_bowl = 'My Custom Bowl';
     var cart_details = {};
+
+    var custom_bowl = {
+        id: 1,
+        name: 'My Custom Bowl',
+        price: '',
+        total: '',
+        pickup_time: '',
+        items: {},
+        text: ''
+    };
     $('.top_cart_add_button').click(function() {
 
         var category, categories = {};
@@ -536,8 +553,8 @@ color: white;}
             }
         });
 
-        console.log(categories);
-        console.log(items_per_category);
+        // console.log(categories);
+        // console.log(items_per_category);
         if ($.isEmptyObject(categories)) {
             toastr.error('No Item has been selected!');
         } else {
@@ -563,6 +580,7 @@ color: white;}
 
 
     function prod_add(id) {
+
         $('.no_component').addClass('hidden');
         $('.single_prod_btns[data-value=' + id + ']').addClass('single_prod_btns_selected');
         $('.tabs_div_content[data-value=' + id + ']').addClass('single_prod_selected');
@@ -570,10 +588,15 @@ color: white;}
         var free_quantity = single_item.attr('data-free-qty');
         var free_quantity_price = single_item.attr('data-qty-price');
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
-        final_items.push(single_item.find('.prod_name').text());
         $('.minus_item[data-value=' + id + ']').removeClass('hidden');
         var count_item = single_item.attr('prod_count');
-        single_item.attr('prod_count', ++count_item);
+        var current_item_quantity = single_item.attr('prod_count', ++count_item);
+        var current_item_name = single_item.find('.prod_name').text();
+        // console.log(cart_details[custom_bowl]);
+        custom_bowl['items'][id] = {
+            name: current_item_name,
+            quantity: count_item
+        };
         var count_item_value = '<span class="cart_selected_count' + id + '" style="vertical-align: sub;font-size: 18px;font-weight: bold;color: #8e1069;">' + single_item.attr('prod_count') + 'X</span>'
         $('.cart_selected_count' + id).remove();
         $('.single_prod_btns[data-value=' + id + ']').append(count_item_value);
@@ -584,6 +607,7 @@ color: white;}
         } else {
             $('.cart_div_count' + id).text(single_item.attr('prod_count') + 'X');
         }
+
         if (count_item > free_quantity) {
             total_custom_bowl_price = parseFloat(cart_total_price) + parseFloat(free_quantity_price);
             $('.total_cutom_bowl_price').attr('value', total_custom_bowl_price);
@@ -608,14 +632,31 @@ color: white;}
             $('.single_prod_add[data-value=' + id + ']').attr('prod_count', 0);
             $('.minus_item[data-value=' + id + ']').parent().removeClass('single_prod_btns_selected');
             $('.tabs_div_content[data-value=' + id + ']').removeClass('single_prod_selected');
-            // final_items.empty();
+            delete custom_bowl['items'][id];
+            if ($('.single_prod_add[data-value=' + id + ']').attr('data-free-qty') == 0) {
+                var free_quantity_price = $('.single_prod_add[data-value=' + id + ']').attr('data-qty-price');
+                var cart_total_price = $('.total_cutom_bowl_price').attr('value');
+                total_custom_bowl_price = parseFloat(cart_total_price) - parseFloat(free_quantity_price);
+                $('.total_cutom_bowl_price').attr('value', total_custom_bowl_price);
+                $('.total_cutom_bowl_price').html(total_custom_bowl_price.toFixed(2) + ' €');
+
+            } else {
+                $('.single_prod_price[data-value=' + id + ']').addClass('hidden');
+                $('.add_item[data-value=' + id + ']').css('margin-right', '0px');
+            }
+
         } else {
             var single_item = $('.single_prod_add[data-value=' + id + ']').attr('prod_count', --current_prod_count);
             var free_quantity = single_item.attr('data-free-qty');
             var free_quantity_price = single_item.attr('data-qty-price');
             var cart_total_price = $('.total_cutom_bowl_price').attr('value');
-            // final_items.remove(single_item.find('.prod_name').text());
-            // console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
+            var current_item_name = single_item.find('.prod_name').text();
+            custom_bowl['items'][id] = {
+                name: current_item_name,
+                quantity: current_prod_count
+            };
+            // remove(single_item.find('.prod_name').text());
+            console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
             var count_item_value = '<span class="cart_selected_count' + id + '"style="vertical-align: sub;font-size: 18px;font-weight: bold;color: #8e1069;">' + single_item.attr('prod_count') + 'X</span>'
             $('.cart_selected_count' + id).remove();
             $('.single_prod_btns[data-value= ' + id + ']').append(count_item_value);
@@ -626,7 +667,7 @@ color: white;}
                 $('.total_cutom_bowl_price').html(total_custom_bowl_price.toFixed(2) + ' €');
             }
             if (current_prod_count <= free_quantity) {
-                // console.log('comin');
+
                 $('.single_prod_price[data-value=' + id + ']').addClass('hidden');
                 $('.add_item[data-value=' + id + ']').css('margin-right', '0px');
             }
@@ -656,17 +697,9 @@ color: white;}
 
     $('.final_checkout').click(function() {
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
-        var pickup_time = $('.total_cutom_bowl_price').attr('value');
-        var custom_bowl = {
-            id: 1,
-            name: current_custom_bowl,
-            price: cart_total_price,
-            total: cart_total_price,
-            pickup_time:'',
-            // items:final_items,
-            text: ''
-        };
-        // console.log(final_items);
+        custom_bowl['price'] = cart_total_price;
+        custom_bowl['total'] = cart_total_price;
+        console.log(custom_bowl);
         cart_details[current_custom_bowl] = custom_bowl;
         document.location.href = base_url + "/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
     });

@@ -28,6 +28,7 @@ class OrdersMiddleware
         // $user->password = 'abc';
         // $user->save();
         $all_items = Cart::content();
+        // dd($all_items);
         $subtotal = Cart::subtotal();
 
         $order = new Orders();
@@ -43,13 +44,27 @@ class OrdersMiddleware
         // $detail_order = [];
         foreach ($all_items as $item) {
             // dd($item->name);
-            $detail_order = new OrdersDetail(); 
+            $detail_order = new OrdersDetail();
             // $detail_order[$item] = array($item->name,$item->qty,$item->price);
             // $detail_order['name'] = $item->name;
             // $detail_order['quantity'] = $item->qty;
             // $detail_order['price'] = $item->price;
+            // dd($item->options->ingredients);
+            $quantities = Array();
+            $extra_ingredients = Array();
+            foreach($item->options->ingredients as $key){
+                array_push($quantities, $key['quantity']);
+                array_push($extra_ingredients, $key['name']);
+            }
+        
+            $extra_ingredients = implode(",", $extra_ingredients);
+            $quantities = implode(",", $quantities);
+            // dd($quantities);
+            // dd($extra_ingredients);
+            $detail_order->extras = $extra_ingredients;
+            $detail_order->quantity = $quantities;
+            // dd($extra_ingredients);
             $detail_order->name = $item->name;
-            $detail_order->quantity = $item->qty;
             $detail_order->price = $item->price;
             $order->orders_detail()->save($detail_order);
         
