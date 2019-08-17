@@ -414,7 +414,7 @@ margin-right: 15px;
                         </div>
                         <div class="form-group" style="text-align: left">
                             <span>TELEPHONE</span>
-                            <input required type="tel" pattern="[\+]\d{2}\d{3}\d{3}\d{3}$" placeholder="+34 123 456 789" name="phone" class="form-control" id="telephone">
+                            <input required type="tel" pattern="\d{3}\d{3}\d{3}$" placeholder="123456789" name="phone" class="form-control" id="telephone">
                         </div>
                         <div class="form-group" style="text-align: left">
                             <span>E-MAIL</span>

@@ -20,6 +20,7 @@ class CreateCustomIngredientsTable extends Migration
             $table->decimal('price', 8, 2);
 //            $table->boolean('free');
             $table->integer('qty_free');
+            $table->string('images');
             $table->text('description');
             $table->timestamps();
         });

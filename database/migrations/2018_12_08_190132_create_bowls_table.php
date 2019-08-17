@@ -19,6 +19,7 @@ class CreateBowlsTable extends Migration
             $table->string('type');
             $table->decimal('price', 8, 2);
             $table->text('specs');
+            $table->string('images');
             $table->text('description');
             $table->timestamps();
         });

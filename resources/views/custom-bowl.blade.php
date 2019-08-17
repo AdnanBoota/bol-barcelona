@@ -439,7 +439,7 @@ color: white;}
             <div data-value="{{$record->id}}" class="tabs_div_content">
                 <div class="single_prod_add" data-qty-price="{{$record->price}}" data-free-qty="{{$record->qty_free}}" prod_count="0" data-value="{{$record->id}}" data-category="{{$record->category}}">
                     <span style=" text-align: right;font-size:14px;color:grey;display: block">{{$record->description}}</span>
-                    <img src="https://via.placeholder.com/125x125" />
+                    <img style="width:125px;height:115px;" src="{{URL::asset('/images/ingredients/'.$record->images.'.jpg')}}" alt="https://via.placeholder.com/125x125" />
                     <span class="prod_name" data-value="{{$record->id}}">{{$record->name}}</span>
                 </div>
                 <div data-value="{{$record->id}}" class="single_prod_btns">
@@ -655,8 +655,8 @@ color: white;}
                 name: current_item_name,
                 quantity: current_prod_count
             };
-            // remove(single_item.find('.prod_name').text());
-            console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
+         
+            // console.log('free_quantity::' + free_quantity + ' price::' + free_quantity_price + ' cart_total::' + cart_total_price);
             var count_item_value = '<span class="cart_selected_count' + id + '"style="vertical-align: sub;font-size: 18px;font-weight: bold;color: #8e1069;">' + single_item.attr('prod_count') + 'X</span>'
             $('.cart_selected_count' + id).remove();
             $('.single_prod_btns[data-value= ' + id + ']').append(count_item_value);
@@ -667,7 +667,6 @@ color: white;}
                 $('.total_cutom_bowl_price').html(total_custom_bowl_price.toFixed(2) + ' €');
             }
             if (current_prod_count <= free_quantity) {
-
                 $('.single_prod_price[data-value=' + id + ']').addClass('hidden');
                 $('.add_item[data-value=' + id + ']').css('margin-right', '0px');
             }
@@ -676,10 +675,13 @@ color: white;}
 
     $(document).on('click', '.remove_selected_prod', function(event) {
         var id = $(this).parent().data('value');
-        var selected_prod_quantity = $('.cart_div_count' + id).text();
+        var selected_prod_quantity = $('.cart_div_count' + id).text().slice(0, -1);
         var _quantity = $(this).parent().data('free-qty');
         var _quantity_price = $(this).parent().data('qty-price');
         var total_cart_value = $('.total_cutom_bowl_price').attr('value');
+        console.log(selected_prod_quantity);
+        console.log(_quantity);
+
         if (selected_prod_quantity > _quantity) {
             var minus_cart_price = selected_prod_quantity - _quantity;
             minus_cart_price = parseFloat(minus_cart_price * _quantity_price);
@@ -687,11 +689,19 @@ color: white;}
             $('.total_cutom_bowl_price').attr('value', update_cart_value);
             $('.total_cutom_bowl_price').html(update_cart_value.toFixed(2) + ' €');
         }
+        $('.minus_item[data-value=' + id + ']').parent().removeClass('single_prod_btns_selected');
+        $('.tabs_div_content[data-value=' + id + ']').removeClass('single_prod_selected');
         $(this).parent().remove();
         $('.minus_item[data-value=' + id + ']').addClass('hidden');
         $('.cart_selected_count' + id).remove();
         $('.cart_item_selected[data-value=' + id + ']').remove();
         $('.single_prod_add[data-value=' + id + ']').attr('prod_count', 0);
+        if (_quantity == 0) {
+
+        } else {
+            $('.add_item[data-value=' + id + ']').css('margin-right', '0px');
+            $('.single_prod_price[data-value=' + id + ']').addClass('hidden');
+        }
     });
 
 
@@ -699,7 +709,6 @@ color: white;}
         var cart_total_price = $('.total_cutom_bowl_price').attr('value');
         custom_bowl['price'] = cart_total_price;
         custom_bowl['total'] = cart_total_price;
-        console.log(custom_bowl);
         cart_details[current_custom_bowl] = custom_bowl;
         document.location.href = base_url + "/checkout?items=" + encodeURIComponent(JSON.stringify(cart_details));
     });
